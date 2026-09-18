@@ -1,113 +1,85 @@
-# Coolyeah — Event Portfolio
+# 🎮 Coolyeah — Minecraft-Themed Landing Page
 
-Portfolio satu halaman yang di-upgrade untuk kebutuhan event, booth, showcase, creative technology, dan presentasi layar besar. Visualnya menggabungkan midnight navy, electric blue, hot pink, coral orange, dan gold dengan motif voxel/3D yang ringan.
+> **Pelatihan Vibe Coding POLSRI 2026**  
+> Repository ini adalah hasil pelatihan *Vibe Coding* di Politeknik Negeri Sriwijaya (POLSRI) tahun 2026. Landing page bergaya **Minecraft / Pixel Art / 8-Bit** yang dibuat menggunakan HTML, CSS, dan JavaScript murni — tanpa framework.
 
-Catatan: file referensi visual `image.png` tidak dapat dibaca oleh model ini, jadi desain dibuat menggunakan sistem warna dan token yang mudah dikonfigurasi. Jika ada brand guideline event, ubah token warna di `index.html` tanpa perlu mengubah struktur halaman.
+---
 
-## Yang Berubah
+## ✨ Fitur Utama
 
-- Arah visual event-ready dengan gradient aurora, beam, grid perspektif, dan aksen warna neon hangat.
-- Event ribbon `CREATIVE TECH EVENT / 2026` pada hero.
-- CTA orange/coral yang lebih terlihat pada layar jauh.
-- Highlight cyan untuk link dan struktur, pink untuk energi brand, gold untuk status/badge.
-- Project card dapat dibuka menggunakan mouse, keyboard Enter, atau Space.
-- Semua fitur portfolio sebelumnya tetap tersedia: mobile menu, modal, copy email, fallback foto, reduced-motion, dan particle cleanup.
+| Fitur | Deskripsi |
+|---|---|
+| 🎨 **Pixel Art UI** | Seluruh tampilan menggunakan font `Press Start 2P` dan estetika kotak-kotak 8-bit |
+| 🟩 **3D Grass Block** | Blok rumput 3D yang berputar, dibuat 100% dari CSS (tanpa gambar) |
+| ☁️ **Awan & Matahari Animasi** | Elemen langit yang bergerak secara otomatis untuk menghidupkan suasana |
+| 💎 **Floating Ores** | Partikel Diamond, Gold, Emerald, dan Redstone yang melayang di layar |
+| 🖱️ **Click Particles** | Klik di mana saja untuk memunculkan efek cipratan partikel piksel |
+| 🪵 **Tombol Gaya Minecraft** | Tombol UI bergaya blok kayu/batu dengan efek 3D `inset`/`outset` |
+| 📱 **Responsive** | Tampilan menyesuaikan layar desktop, tablet, dan mobile |
 
-## Fitur
+---
 
-- Section `Home`, `About`, `Projects`, `Skills`, dan `Contact`.
-- Responsive untuk mobile, tablet, desktop, booth display, dan layar event.
-- CSS 3D/voxel background tanpa WebGL atau dependency besar.
-- Accessible keyboard navigation dengan skip link dan focus ring.
-- Modal proyek dengan Escape, backdrop close, dan focus restore.
-- Fallback jika foto tidak tersedia atau Clipboard API gagal.
-- Tidak membutuhkan `npm install`, framework, bundler, database, atau API key.
+## 🛠️ Tech Stack
 
-## Struktur File
+- **HTML5** — Semantic tags (`<header>`, `<section>`, `<main>`)
+- **Vanilla CSS3** — CSS Variables, Flexbox, CSS Grid, `@keyframes`, 3D `transform`
+- **Vanilla JavaScript (ES6+)** — DOM manipulation, event listener, particle system
+- **Google Fonts** — [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P)
+- **Tanpa Framework** — Tidak menggunakan Bootstrap, Tailwind, React, atau library lainnya
 
-```text
+---
+
+## 📁 Struktur File
+
+```
 .
-├── index.html       # UI, token warna, content model, CSS, dan interaksi
+├── index.html       # Satu file utuh: HTML + CSS + JS (landing page Minecraft)
+├── prd.md           # Product Requirements Document (PRD)
 ├── server.js        # Static server Node.js pada port 3000
-├── run.bat          # Shortcut Windows
-├── fotosaya.jpeg    # Foto profil opsional
-├── prd.md           # PRD event portfolio terbaru
-└── .kilo/plans/     # Plan implementasi
+├── run.bat          # Shortcut menjalankan server di Windows
+└── README.md        # Dokumentasi (file ini)
 ```
 
-## Menjalankan Lokal
+---
 
-Prasyarat: Node.js tersedia pada PATH. Tidak perlu `npm install`.
+## 🚀 Menjalankan Secara Lokal
+
+**Prasyarat:** [Node.js](https://nodejs.org/) tersedia di PATH. Tidak perlu `npm install`.
 
 ```bash
 node server.js
 ```
 
-Buka [http://localhost:3000](http://localhost:3000). Pada Windows, jalankan `run.bat` sebagai alternatif.
+Buka **http://localhost:3000** di browser. Atau di Windows, klik dua kali `run.bat`.
 
-Root server menyajikan `index.html`. Hentikan dengan `Ctrl+C`.
+Hentikan server dengan `Ctrl+C`.
 
-## Customisasi Warna Event
+---
 
-Token warna berada di bagian `:root` pada `index.html`:
+## 🎨 Warna & Design Tokens
 
-```css
---bg: #090b20;
---cyan: #38bdf8;
---lime: #ffd166;
---violet: #fb4f9b;
---amber: #ff7043;
-```
+Variabel warna yang digunakan di `:root`:
 
-Pemetaan pemakaian:
+| Token | Hex | Kegunaan |
+|---|---|---|
+| `--sky-blue` | `#87CEEB` | Background langit |
+| `--grass` | `#41980a` | Blok rumput |
+| `--grass-top` | `#55FF55` | Permukaan rumput |
+| `--dirt` | `#8B4513` | Blok tanah |
+| `--stone` | `#7D7D7D` | Tombol batu |
+| `--wood` | `#8B5A2B` | Navbar & tombol kayu |
+| `--diamond` | `#55FFFF` | Partikel berlian |
+| `--gold` | `#FFAA00` | Partikel emas |
 
-- `--bg`: background utama.
-- `--cyan`: link, grid, outline, dan aksen teknologi.
-- `--violet`: pink/hot accent untuk depth dan shadow.
-- `--amber`: CTA utama dan energi event.
-- `--lime`: badge/status/highlight gold.
+---
 
-Gunakan warna brand event dengan kontras yang cukup terhadap `--bg` dan `--text`.
+## 👨‍💻 Author
 
-## Mengganti Konten
+**Bagaskara Amukti Palapa**  
+Mahasiswa Politeknik Negeri Sriwijaya (POLSRI)
 
-Object `portfolio` berada di bagian paling bawah `index.html`. Update:
+---
 
-- `profile.email`
-- `stats`
-- `socials`
-- `skills`
-- `projects`
+## 📄 Lisensi
 
-Ganti juga teks hero, event ribbon, bio, statistik, dan quick facts di markup HTML.
-
-Placeholder yang wajib diganti sebelum tampil publik:
-
-- `hello@coolyeah.placeholder`
-- `github.com/your-handle`
-- `linkedin.com/in/your-handle`
-- URL `example.com`
-- `CV-Coolyeah.pdf` atau sediakan file CV sebenarnya
-- Nama, role, bio, statistik, dan deskripsi proyek
-
-## Asset Foto
-
-Hero menggunakan `fotosaya.jpeg`. Jika file tidak tersedia atau rusak, halaman otomatis menampilkan fallback `FOTO COOLYEAH` dan tetap dapat digunakan.
-
-File `image.png` tidak diperlukan oleh implementasi saat ini. Desain tidak bergantung pada kemampuan membaca gambar eksternal.
-
-## Validasi Sebelum Event
-
-- Jalankan server dan pastikan root merespons `HTTP 200`.
-- Tes layout pada 320px, 375px, 768px, 1024px, dan layar lebar.
-- Tes menu mobile dan semua anchor section.
-- Buka modal dengan klik, Enter, dan Space; tutup dengan tombol, backdrop, dan Escape.
-- Tes keyboard-only dari navbar sampai footer.
-- Aktifkan `prefers-reduced-motion` untuk device event bertenaga rendah.
-- Pastikan placeholder email dan URL tidak tampil di layar publik.
-- Tes font fallback ketika koneksi internet dimatikan.
-- Pastikan brightness proyektor tidak menghilangkan teks muted dan CTA.
-
-## Deployment
-
-Untuk static hosting, upload `index.html` dan `fotosaya.jpeg` jika foto digunakan. `server.js` hanya diperlukan untuk development lokal atau hosting Node. Tidak ada secret atau API key di project ini.
+Project ini dibuat untuk keperluan pelatihan dan pembelajaran. Bebas digunakan dan dimodifikasi.
