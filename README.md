@@ -1,4 +1,4 @@
-# 🎮 Pelatihan Vibe Coding POLSRI 2026
+# Pelatihan Vibe Coding POLSRI 2026
 
 Repository ini digunakan untuk **menyimpan hasil pelatihan Vibe Coding** di Politeknik Negeri Sriwijaya (POLSRI) tahun 2026.
 
@@ -6,10 +6,10 @@ Repository ini digunakan untuk **menyimpan hasil pelatihan Vibe Coding** di Poli
 
 ---
 
-## 👨‍💻 Author
+# Author
 
 **Bagaskara Amukti Palapa**  
-Mahasiswa Politeknik Negeri Sriwijaya (POLSRI)
+Mahasiswa Universitas Bina Darma
 
 ---
 
