@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Coolyeah — event-ready creative portfolio untuk pengalaman digital, visual, dan teknologi.">
+  <meta name="theme-color" content="#090b20">
+  <meta property="og:title" content="Coolyeah — Digital Experience Builder">
+  <meta property="og:description" content="Portofolio personal dengan karya digital, skill, dan cara berkolaborasi.">
+  <meta property="og:type" content="website">
+  <title>Coolyeah — Digital Experience Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090b20;
+      --bg-soft: #111534;
+      --panel: rgba(19, 24, 62, .8);
+      --panel-solid: #151b46;
+      --line: rgba(153, 190, 255, .23);
+      --text: #f8fbff;
+      --muted: #b7c3e4;
+      --cyan: #38bdf8;
+      --lime: #ffd166;
+      --violet: #fb4f9b;
+      --amber: #ff7043;
+      --danger: #ff7e9c;
+      --display: 'Space Grotesk', 'Trebuchet MS', sans-serif;
+      --body: 'DM Sans', Arial, sans-serif;
+      --pixel: 'Press Start 2P', 'Courier New', monospace;
+      --max: 1160px;
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-width: 320px;
+      overflow-x: hidden;
+      color: var(--text);
+      background: var(--bg);
+      font-family: var(--body);
+      line-height: 1.6;
+    }
+    body.modal-open { overflow: hidden; }
+    a { color: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button { font: inherit; }
+    :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
+    .skip-link {
+      position: fixed; left: 1rem; top: -5rem; z-index: 1000;
+      padding: .75rem 1rem; color: var(--bg); background: var(--lime); border-radius: 8px;
+      font-weight: 700; transition: top .2s ease;
+    }
+    .skip-link:focus { top: 1rem; }
+
+    .scene {
+      position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
+      background: radial-gradient(circle at 78% 18%, rgba(56, 189, 248, .2), transparent 25rem),
+        radial-gradient(circle at 12% 56%, rgba(251, 79, 155, .18), transparent 28rem),
+        radial-gradient(circle at 58% 82%, rgba(255, 112, 67, .1), transparent 24rem),
+        linear-gradient(165deg, #18255c 0%, var(--bg) 56%, #050712 100%);
+    }
+    .scene::before {
+      content: ''; position: absolute; left: -10%; right: -10%; bottom: -24%; height: 68%; opacity: .5;
+      background-image: linear-gradient(rgba(56, 189, 248, .2) 1px, transparent 1px), linear-gradient(90deg, rgba(251, 79, 155, .18) 1px, transparent 1px);
+      background-size: 72px 72px; transform: perspective(500px) rotateX(62deg); transform-origin: bottom;
+      mask-image: linear-gradient(to top, black, transparent 84%);
+    }
+    .scene::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 35%, rgba(2, 4, 14, .62) 100%); }
+    .scene-orb { position: absolute; width: 11rem; aspect-ratio: 1; border-radius: 25%; opacity: .18; filter: blur(1px); transform-style: preserve-3d; }
+    .scene-orb::before, .scene-orb::after { content: ''; position: absolute; inset: 12%; border: 1px solid currentColor; }
+    .scene-orb::before { transform: rotate(45deg); } .scene-orb::after { transform: rotate(-45deg); }
+    .orb-one { top: 15%; left: 7%; color: var(--lime); transform: rotate(20deg) skew(-8deg); animation: drift 13s ease-in-out infinite; }
+    .orb-two { top: 27%; right: 8%; color: var(--cyan); width: 8rem; transform: rotate(34deg); animation: drift 17s ease-in-out -3s infinite reverse; }
+    .orb-three { bottom: 9%; left: 45%; color: var(--violet); width: 6rem; animation: drift 12s ease-in-out -5s infinite; }
+    @keyframes drift { 50% { translate: 0 -18px; rotate: 8deg; } }
+    .scene-particles { position: absolute; inset: 0; }
+    .scene-particle { position: absolute; width: 4px; height: 4px; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); opacity: .65; }
+    .scene-particle:nth-child(1) { top: 18%; left: 23%; } .scene-particle:nth-child(2) { top: 37%; left: 81%; background: var(--lime); }
+    .scene-particle:nth-child(3) { top: 63%; left: 13%; background: var(--violet); } .scene-particle:nth-child(4) { top: 73%; left: 72%; }
+    .scene-particle:nth-child(5) { top: 11%; left: 61%; background: var(--amber); } .scene-particle:nth-child(6) { top: 49%; left: 54%; background: var(--lime); }
+
+    .site-header { position: sticky; top: 0; z-index: 50; padding: 1rem 1.25rem; background: rgba(7, 11, 29, .72); border-bottom: 1px solid rgba(157,177,255,.15); backdrop-filter: blur(18px); }
+    .nav-wrap { max-width: var(--max); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+    .brand { display: inline-flex; align-items: center; gap: .65rem; color: var(--text); text-decoration: none; font: 700 1rem var(--display); letter-spacing: .03em; }
+    .brand-mark { display: grid; place-items: center; width: 2.15rem; height: 2.15rem; color: var(--bg); background: var(--amber); border: 3px solid var(--text); box-shadow: 4px 4px 0 var(--violet); font: .7rem var(--pixel); }
+    .nav-links { display: flex; align-items: center; gap: 1.45rem; margin: 0; padding: 0; list-style: none; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 600; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 2.8rem; padding: .7rem 1.05rem; border: 1px solid transparent; border-radius: 9px; color: var(--bg); background: var(--amber); text-decoration: none; font-weight: 700; cursor: pointer; box-shadow: 4px 4px 0 var(--violet); transition: transform .2s ease, filter .2s ease, box-shadow .2s ease; }
+    .nav-cta:hover, .button:hover { transform: translate(-2px, -2px); filter: brightness(1.06); box-shadow: 6px 6px 0 rgba(168,140,255,.65); }
+    .button.secondary { color: var(--text); background: rgba(19, 24, 62, .68); border-color: var(--line); box-shadow: 4px 4px 0 rgba(56,189,248,.45); }
+    .button.small { min-height: 2.35rem; padding: .5rem .75rem; font-size: .83rem; }
+    .menu-toggle { display: none; width: 2.8rem; height: 2.8rem; color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+    .menu-toggle span, .menu-toggle::before, .menu-toggle::after { display: block; width: 1.2rem; height: 2px; margin: .25rem auto; content: ''; background: currentColor; }
+
+    main { position: relative; }
+    .section, .hero { max-width: var(--max); margin: 0 auto; padding: 6.5rem 1.25rem; scroll-margin-top: 4.8rem; }
+    .hero { min-height: min(860px, calc(100vh - 4.7rem)); display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(2.5rem, 7vw, 6rem); padding-top: 5.5rem; }
+    .event-ribbon { display: inline-flex; align-items: center; gap: .55rem; margin-bottom: 1.25rem; padding: .42rem .65rem; color: var(--bg); background: var(--lime); box-shadow: 4px 4px 0 var(--violet); font: .56rem var(--pixel); }
+    .event-ribbon::before { content: 'LIVE'; padding: .2rem .32rem; color: var(--text); background: var(--violet); font-size: .45rem; }
+    .eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--lime); font: .62rem var(--pixel); letter-spacing: .08em; line-height: 1.8; }
+    .eyebrow::before { content: ''; width: .65rem; height: .65rem; background: var(--lime); box-shadow: 0 0 18px var(--lime); }
+    h1, h2, h3 { margin: 0; font-family: var(--display); line-height: 1.05; letter-spacing: -.045em; }
+    h1 { max-width: 11ch; margin-top: 1.2rem; font-size: clamp(3rem, 7vw, 6.5rem); }
+    h1 .accent { color: var(--cyan); text-shadow: 0 0 32px rgba(92,236,255,.28); }
+    .hero-copy { max-width: 39rem; margin-top: 1.5rem; color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem); }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
+    .micro-meta { display: flex; flex-wrap: wrap; gap: .7rem 1.4rem; margin-top: 1.6rem; color: var(--muted); font-size: .82rem; }
+    .micro-meta span { display: inline-flex; align-items: center; gap: .4rem; }
+    .micro-meta span::before { content: '◆'; color: var(--violet); font-size: .6rem; }
+
+    .hero-art { position: relative; min-height: 31rem; display: grid; place-items: center; perspective: 1000px; }
+    .art-aura { position: absolute; width: min(31rem, 90vw); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(92,236,255,.2), rgba(168,140,255,.09) 42%, transparent 68%); }
+    .voxel-frame { position: relative; width: min(20rem, 78vw); aspect-ratio: .82; padding: .8rem; background: linear-gradient(135deg, rgba(92,236,255,.7), rgba(168,140,255,.72) 55%, rgba(201,255,90,.6)); clip-path: polygon(9% 0, 100% 0, 100% 89%, 89% 100%, 0 100%, 0 11%); transform: rotate(4deg); box-shadow: 18px 18px 0 rgba(8,12,33,.75); }
+    .voxel-frame::before { content: ''; position: absolute; inset: .8rem; background: #0b1030; clip-path: inherit; }
+    .profile-image { position: absolute; inset: 1.35rem; width: calc(100% - 2.7rem); height: calc(100% - 2.7rem); object-fit: cover; object-position: center; clip-path: polygon(8% 0, 100% 0, 100% 89%, 89% 100%, 0 100%, 0 11%); filter: saturate(.9) contrast(1.05); }
+    .image-fallback { position: absolute; inset: 1.35rem; display: grid; place-items: center; padding: 1rem; color: var(--muted); background: linear-gradient(145deg, #162557, #211943); text-align: center; font: .7rem var(--pixel); }
+    .profile-image:not([hidden]) + .image-fallback { display: none; }
+    .voxel-badge { position: absolute; right: -2rem; bottom: 2rem; max-width: 10rem; padding: .8rem; color: var(--bg); background: var(--lime); box-shadow: 7px 7px 0 var(--violet); font-size: .76rem; font-weight: 700; line-height: 1.3; }
+    .voxel-badge strong { display: block; font: .58rem var(--pixel); }
+    .art-cube { position: absolute; width: 3.5rem; height: 3.5rem; border: 5px solid var(--cyan); background: rgba(92,236,255,.12); transform: rotate(30deg) skewY(-12deg); box-shadow: 1.4rem 1.4rem 0 rgba(168,140,255,.35); animation: cubeFloat 6s ease-in-out infinite; }
+    .cube-one { top: 10%; left: 7%; } .cube-two { right: 2%; bottom: 9%; width: 2.5rem; height: 2.5rem; border-color: var(--amber); animation-delay: -2s; }
+    @keyframes cubeFloat { 50% { transform: translateY(-14px) rotate(45deg) skewY(-12deg); } }
+
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; }
+    .section-kicker { display: block; margin-bottom: .8rem; color: var(--cyan); font: .62rem var(--pixel); letter-spacing: .09em; }
+    h2 { font-size: clamp(2.3rem, 5vw, 4rem); }
+    .section-intro { max-width: 31rem; color: var(--muted); }
+    .panel { background: linear-gradient(145deg, rgba(18,29,69,.87), rgba(9,15,38,.75)); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 10px 10px 0 rgba(3,6,20,.38); }
+    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.25rem; }
+    .about-copy { padding: clamp(1.5rem, 4vw, 2.4rem); }
+    .about-copy p { margin: 0 0 1rem; color: var(--muted); }
+    .about-copy p:last-child { margin-bottom: 0; }
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; overflow: hidden; }
+    .stat { display: flex; min-height: 8rem; flex-direction: column; justify-content: center; padding: 1.4rem; background: rgba(92,236,255,.04); border: 1px solid rgba(157,177,255,.12); }
+    .stat strong { color: var(--lime); font: 700 clamp(1.8rem, 4vw, 2.8rem) var(--display); }
+    .stat span { color: var(--muted); font-size: .84rem; }
+    .journey { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
+    .journey-item { position: relative; padding: 1.25rem 1.1rem 1.2rem; border-top: 2px solid var(--violet); background: rgba(15,23,55,.65); }
+    .journey-item::before { content: ''; position: absolute; top: -.55rem; left: 1rem; width: .85rem; height: .85rem; background: var(--lime); border: 3px solid var(--bg); }
+    .journey-item b { display: block; margin-bottom: .35rem; color: var(--cyan); font: .58rem var(--pixel); }
+    .journey-item h3 { margin-bottom: .4rem; font-size: 1.1rem; letter-spacing: -.02em; }
+    .journey-item p { margin: 0; color: var(--muted); font-size: .87rem; }
+
+    .projects-section { max-width: none; padding-left: max(1.25rem, calc((100vw - var(--max)) / 2 + 1.25rem)); padding-right: max(1.25rem, calc((100vw - var(--max)) / 2 + 1.25rem)); }
+    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .project-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); transition: transform .25s ease, border-color .25s ease; }
+    .project-card:hover, .project-card:focus-within { transform: translateY(-7px) rotateX(1deg) rotateY(-1deg); border-color: rgba(92,236,255,.7); }
+    .project-visual { position: relative; min-height: 11rem; display: grid; place-items: center; overflow: hidden; background: #121d46; }
+    .project-visual::before { content: ''; position: absolute; width: 11rem; height: 7rem; border: 1px solid var(--cyan); transform: rotate(-15deg) skewX(-20deg); box-shadow: 2rem 1.2rem 0 rgba(168,140,255,.35), -2rem -1.2rem 0 rgba(201,255,90,.18); }
+    .project-visual::after { content: attr(data-code); position: absolute; right: 1rem; bottom: .8rem; color: rgba(245,247,255,.58); font: .55rem var(--pixel); }
+    .visual-two { background: #1d1745; } .visual-two::before { border-color: var(--violet); transform: rotate(25deg) skewX(-20deg); } .visual-three { background: #122f42; } .visual-three::before { border-color: var(--lime); transform: rotate(-3deg) skewX(-25deg); }
+    .visual-glyph { position: relative; z-index: 1; color: var(--text); font: clamp(1.5rem, 4vw, 2.5rem) var(--pixel); text-shadow: 5px 5px 0 rgba(3,6,20,.65); }
+    .project-body { display: flex; flex: 1; flex-direction: column; padding: 1.35rem; }
+    .project-type { color: var(--lime); font: .55rem var(--pixel); letter-spacing: .05em; }
+    .project-body h3 { margin: .6rem 0; font-size: 1.5rem; letter-spacing: -.03em; }
+    .project-body p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .stack { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0 1.25rem; }
+    .chip { display: inline-flex; padding: .35rem .55rem; color: #dce7ff; background: rgba(92,236,255,.08); border: 1px solid rgba(92,236,255,.2); border-radius: 5px; font-size: .72rem; }
+    .project-links { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: auto; }
+    .text-button { padding: .3rem 0; color: var(--cyan); background: none; border: 0; font-weight: 700; cursor: pointer; }
+    .text-button:hover { color: var(--lime); }
+
+    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .skill-panel { padding: 1.5rem; }
+    .skill-panel h3 { margin-bottom: 1.15rem; font-size: 1.3rem; letter-spacing: -.02em; }
+    .skill-list { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; padding: 0; list-style: none; }
+    .skill-list li { padding: .55rem .7rem; color: var(--text); background: rgba(168,140,255,.1); border: 1px solid rgba(168,140,255,.3); border-radius: 6px; font-size: .84rem; }
+    .skill-meter { margin-top: 1.8rem; }
+    .meter-row { margin-top: 1rem; }
+    .meter-label { display: flex; justify-content: space-between; color: var(--muted); font-size: .82rem; }
+    .meter-track { height: .5rem; margin-top: .4rem; overflow: hidden; background: #070b1d; border-radius: 2px; }
+    .meter-fill { display: block; width: var(--level); height: 100%; background: linear-gradient(90deg, var(--cyan), var(--lime)); }
+
+    .contact-panel { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; overflow: hidden; padding: clamp(1.6rem, 5vw, 3.2rem); }
+    .contact-panel::after { content: 'CONTACT'; position: absolute; right: -1rem; bottom: -1.7rem; color: rgba(92,236,255,.08); font: 4rem var(--pixel); pointer-events: none; }
+    .contact-panel h2 { max-width: 11ch; }
+    .contact-panel p { max-width: 30rem; color: var(--muted); }
+    .contact-actions { display: flex; align-items: flex-start; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
+    .contact-list { position: relative; z-index: 1; display: grid; align-content: center; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+    .contact-list a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 1rem; color: var(--text); background: rgba(92,236,255,.05); border: 1px solid var(--line); border-radius: 8px; text-decoration: none; }
+    .contact-list a:hover { border-color: var(--cyan); }
+    .contact-list small { color: var(--muted); font-size: .75rem; }
+    .copy-status { min-height: 1.5em; color: var(--lime); font-size: .78rem; }
+    footer { max-width: var(--max); margin: 0 auto; padding: 2rem 1.25rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); border-top: 1px solid rgba(157,177,255,.14); font-size: .8rem; }
+    footer a { color: var(--cyan); text-decoration: none; }
+
+    .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 1rem; background: rgba(2,4,14,.8); backdrop-filter: blur(8px); }
+    .modal-backdrop[hidden] { display: none; }
+    .modal { position: relative; width: min(42rem, 100%); max-height: min(40rem, 90vh); overflow: auto; padding: clamp(1.4rem, 4vw, 2.5rem); background: var(--panel-solid); border: 1px solid var(--cyan); border-radius: var(--radius); box-shadow: 10px 10px 0 rgba(168,140,255,.35); }
+    .modal-close { position: absolute; top: 1rem; right: 1rem; width: 2.3rem; height: 2.3rem; color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
+    .modal h2 { padding-right: 2.5rem; font-size: clamp(1.9rem, 5vw, 3rem); }
+    .modal-content { color: var(--muted); }
+    .modal-content strong { color: var(--text); }
+    .modal-content .stack { margin: 1.25rem 0; }
+    .reveal { opacity: 0; translate: 0 18px; transition: opacity .65s ease, translate .65s ease; }
+    .reveal.is-visible { opacity: 1; translate: 0; }
+    .burst-particle { position: fixed; z-index: 200; width: 7px; height: 7px; pointer-events: none; animation: burst .7s ease-out forwards; }
+    @keyframes burst { to { translate: var(--tx) var(--ty); scale: 0; opacity: 0; } }
+
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 5rem; }
+      .hero-art { min-height: 28rem; order: -1; }
+      .hero-content { text-align: center; } .hero-content .eyebrow, .micro-meta { justify-content: center; }
+      h1 { max-width: none; } .hero-actions { justify-content: center; }
+      .project-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 680px) {
+      .site-header { padding: .75rem 1rem; } .menu-toggle { display: block; }
+      .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: .6rem 1rem 1rem; background: rgba(7,11,29,.97); border-bottom: 1px solid var(--line); }
+      .nav-links.is-open { display: flex; } .nav-links li { border-bottom: 1px solid rgba(157,177,255,.12); } .nav-links a { display: block; padding: .8rem .3rem; }
+      .nav-links .nav-cta { margin-top: .7rem; text-align: center; }
+      .section, .hero { padding-top: 4.5rem; padding-bottom: 4.5rem; } .section-heading { display: block; }
+      .section-intro { margin-top: 1rem; } .about-grid, .skills-layout, .contact-panel { grid-template-columns: 1fr; }
+      .journey { grid-template-columns: 1fr; } .project-grid { grid-template-columns: 1fr; }
+      .project-visual { min-height: 10rem; } .contact-panel h2 { max-width: 15ch; } footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; translate: none; } .scene-orb, .art-cube { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
+  <div class="scene" aria-hidden="true">
+    <div class="scene-orb orb-one"></div><div class="scene-orb orb-two"></div><div class="scene-orb orb-three"></div>
+    <div class="scene-particles"><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i></div>
+  </div>
+
+  <header class="site-header">
+    <nav class="nav-wrap" aria-label="Navigasi utama">
+      <a class="brand" href="#home" aria-label="Coolyeah, kembali ke beranda"><span class="brand-mark">CY</span><span>coolyeah<span style="color:var(--cyan)">.</span></span></a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Buka menu navigasi"><span></span></button>
+      <ul class="nav-links" id="primary-menu">
+        <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li>
+        <li><a class="nav-cta" href="#contact">Let's collaborate <span aria-hidden="true">↗</span></a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="hero" id="home" aria-labelledby="hero-title">
+      <div class="hero-content reveal">
+        <div class="event-ribbon">CREATIVE TECH EVENT / 2026</div>
+        <span class="eyebrow">AVAILABLE FOR CREATIVE COLLABS</span>
+        <h1 id="hero-title">Saya membangun pengalaman digital yang <span class="accent">berani tampil.</span></h1>
+        <p class="hero-copy">Developer dan designer yang merangkai interface, motion, dan teknologi menjadi pengalaman event yang mudah diingat — dari layar pertama sampai ajakan kolaborasi.</p>
+        <div class="hero-actions"><a class="button" href="#projects">Lihat proyek <span aria-hidden="true">↓</span></a><a class="button secondary" href="CV-Coolyeah.pdf" download>Download CV <span aria-hidden="true">↗</span></a></div>
+        <div class="micro-meta"><span>Stage-ready visual</span><span>Berbasis di Indonesia</span><span>Open to remote</span></div>
+      </div>
+      <div class="hero-art reveal" aria-label="Foto profil Coolyeah dalam frame voxel">
+        <div class="art-aura" aria-hidden="true"></div><div class="art-cube cube-one" aria-hidden="true"></div><div class="art-cube cube-two" aria-hidden="true"></div>
+        <div class="voxel-frame"><img class="profile-image" src="fotosaya.jpeg" alt="Foto profil Coolyeah" width="640" height="780"><div class="image-fallback" aria-hidden="true">FOTO<br>COOLYEAH</div><div class="voxel-badge"><strong>STATUS_01</strong>Turning ideas<br>into interfaces.</div></div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="about" aria-labelledby="about-title">
+      <div class="section-heading"><div><span class="section-kicker">01 / ABOUT THE BUILDER</span><h2 id="about-title">Dibangun untuk<br><span style="color:var(--lime)">berdampak.</span></h2></div><p class="section-intro">Placeholder bio ini siap diganti dengan cerita personal: fokus pada masalah yang diselesaikan, proses kolaborasi, dan dampak yang dihasilkan.</p></div>
+      <div class="about-grid"><div class="panel about-copy"><p>Saya percaya produk digital yang baik bukan hanya terlihat keren, tetapi juga memberi arah yang jelas. Saya menggabungkan cara berpikir sistematis dengan rasa ingin tahu visual untuk mengubah brief yang abstrak menjadi pengalaman yang konkret.</p><p>Mulai dari menyusun struktur, mengeksplorasi visual, hingga memoles detail interaksi — saya senang bekerja block by block bersama tim yang peduli pada pengguna.</p></div><div class="panel stats" id="stats-list"></div></div>
+      <div class="journey"><article class="journey-item"><b>01 / DISCOVER</b><h3>Temukan inti</h3><p>Memetakan kebutuhan pengguna dan peluang produk sebelum membuka editor.</p></article><article class="journey-item"><b>02 / BUILD</b><h3>Rakit sistem</h3><p>Mengubah arah strategis menjadi komponen yang konsisten dan mudah dikembangkan.</p></article><article class="journey-item"><b>03 / REFINE</b><h3>Poles dampak</h3><p>Menguji detail, merapikan alur, dan memastikan hasilnya terasa di setiap layar.</p></article></div>
+    </section>
+
+    <section class="section projects-section reveal" id="projects" aria-labelledby="projects-title">
+      <div class="section-heading"><div><span class="section-kicker">02 / SELECTED BUILDS</span><h2 id="projects-title">Dunia yang<br><span style="color:var(--cyan)">pernah dirakit.</span></h2></div><p class="section-intro">Contoh proyek placeholder — ganti judul, visual, deskripsi, dan tautannya dengan karya nyata sebelum dipublikasikan.</p></div>
+      <div class="project-grid" id="project-grid"></div>
+    </section>
+
+    <section class="section reveal" id="skills" aria-labelledby="skills-title">
+      <div class="section-heading"><div><span class="section-kicker">03 / TOOLKIT</span><h2 id="skills-title">Senjata<br><span style="color:var(--violet)">sehari-hari.</span></h2></div><p class="section-intro">Teknologi adalah medium. Yang penting adalah memilih alat yang tepat untuk membuat pengalaman terasa sederhana.</p></div>
+      <div class="skills-layout"><div class="panel skill-panel" id="skill-groups"></div><div class="panel skill-panel"><h3>Orbit fokus</h3><p style="color:var(--muted);margin-top:-.5rem">Visualisasi ini menggambarkan area yang sering saya gunakan — bukan klaim level objektif.</p><div class="skill-meter"><div class="meter-row"><div class="meter-label"><span>Interface & Frontend</span><span>core</span></div><div class="meter-track"><span class="meter-fill" style="--level:92%"></span></div></div><div class="meter-row"><div class="meter-label"><span>Design systems</span><span>core</span></div><div class="meter-track"><span class="meter-fill" style="--level:82%"></span></div></div><div class="meter-row"><div class="meter-label"><span>Motion & prototyping</span><span>explore</span></div><div class="meter-track"><span class="meter-fill" style="--level:68%"></span></div></div></div></div></div>
+    </section>
+
+    <section class="section reveal" id="contact" aria-labelledby="contact-title"><div class="panel contact-panel"><div><span class="section-kicker">04 / OPEN CHANNEL</span><h2 id="contact-title">Mari bangun sesuatu yang <span style="color:var(--lime)">berarti.</span></h2><p>Punya ide, tantangan, atau sekadar ingin bertukar perspektif? Kirim sinyal. Saya akan kembali dengan respons yang manusiawi.</p><div class="contact-actions"><a class="button" href="mailto:hello@coolyeah.placeholder">Kirim email <span aria-hidden="true">↗</span></a><button class="button secondary" id="copy-email" type="button" data-email="hello@coolyeah.placeholder">Copy email</button></div><div class="copy-status" id="copy-status" role="status" aria-live="polite"></div></div><ul class="contact-list" id="social-list"></ul></div></section>
+  </main>
+
+  <footer><span>© <span id="year"></span> Coolyeah. Built block by block.</span><a href="#home">Kembali ke atas ↑</a></footer>
+
+  <div class="modal-backdrop" id="project-modal" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" type="button" aria-label="Tutup detail proyek">×</button><div class="modal-content"><span class="section-kicker" id="modal-category"></span><h2 id="modal-title"></h2><p id="modal-description"></p><div class="stack" id="modal-stack"></div><p><strong>Catatan:</strong> Detail ini adalah placeholder konten yang siap diganti dengan studi kasus sebenarnya.</p><div class="project-links"><a class="button small" id="modal-demo" href="#" target="_blank" rel="noopener noreferrer">Lihat demo ↗</a><a class="button small secondary" id="modal-source" href="#" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></div></div>
+
+  <script>
+    'use strict';
+    // CONTENT MODEL: replace placeholder values here before publishing.
+    const portfolio = {
+      profile: { email: 'hello@coolyeah.placeholder' },
+      stats: [{ value: '12+', label: 'proyek dirakit' }, { value: '04', label: 'tahun eksplorasi' }, { value: '08', label: 'partner kolaborasi' }, { value: '∞', label: 'rasa ingin tahu' }],
+      socials: [{ label: 'Email', value: 'hello@coolyeah.placeholder', url: 'mailto:hello@coolyeah.placeholder' }, { label: 'GitHub', value: 'github.com/your-handle', url: 'https://github.com/your-handle' }, { label: 'LinkedIn', value: 'linkedin.com/in/your-handle', url: 'https://linkedin.com/in/your-handle' }],
+      skills: [{ group: 'Frontend', items: ['HTML / CSS', 'JavaScript', 'Accessibility', 'Responsive UI'] }, { group: 'Backend / Tools', items: ['Node.js', 'REST API', 'Git workflow', 'Performance'] }, { group: 'Design / Motion', items: ['Design systems', 'Figma', 'Prototyping', 'CSS motion'] }],
+      projects: [
+        { id: 'atlas', code: 'AT', category: 'PRODUCT INTERFACE', title: 'Atlas Workspace', description: 'Dashboard kolaborasi yang merapikan pekerjaan kompleks menjadi alur yang tenang dan terukur.', stack: ['UX direction', 'Design system', 'Frontend'], imageClass: '', demoUrl: 'https://example.com/atlas-workspace', sourceUrl: 'https://github.com/your-handle/atlas-workspace' },
+        { id: 'signal', code: 'SG', category: 'BRAND EXPERIENCE', title: 'Signal / 2049', description: 'Landing page eksperimental untuk brand teknologi dengan storytelling yang bergerak mengikuti scroll.', stack: ['Art direction', 'Motion', 'Prototyping'], imageClass: 'visual-two', demoUrl: 'https://example.com/signal-2049', sourceUrl: 'https://github.com/your-handle/signal-2049' },
+        { id: 'terra', code: 'TR', category: 'WEB PLATFORM', title: 'Terra Notes', description: 'Ruang catatan digital yang ringan, accessible, dan terasa personal di setiap breakpoint.', stack: ['Frontend', 'Accessibility', 'Node.js'], imageClass: 'visual-three', demoUrl: 'https://example.com/terra-notes', sourceUrl: 'https://github.com/your-handle/terra-notes' }
+      ]
+    };
+
+    const qs = (selector, scope = document) => scope.querySelector(selector);
+    const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
+    const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+
+    const profileImage = qs('.profile-image');
+    const imageFallback = qs('.image-fallback');
+    if (profileImage && imageFallback) {
+      profileImage.addEventListener('load', () => { profileImage.hidden = false; imageFallback.hidden = true; });
+      profileImage.addEventListener('error', () => { profileImage.hidden = true; imageFallback.hidden = false; });
+      imageFallback.hidden = false;
+      if (profileImage.complete && profileImage.naturalWidth > 0) imageFallback.hidden = true;
+    }
+
+    const statsList = qs('#stats-list');
+    if (statsList) statsList.innerHTML = portfolio.stats.map(stat => `<div class="stat"><strong>${stat.value}</strong><span>${stat.label}</span></div>`).join('');
+    const skillGroups = qs('#skill-groups');
+    if (skillGroups) skillGroups.innerHTML = portfolio.skills.map(skill => `<div style="margin-bottom:1.35rem"><h3>${skill.group}</h3><ul class="skill-list">${skill.items.map(item => `<li>${item}</li>`).join('')}</ul></div>`).join('');
+    const socialList = qs('#social-list');
+    if (socialList) socialList.innerHTML = portfolio.socials.map(social => `<li><a href="${social.url}"${social.url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''}><span>${social.label}</span><small>${social.value} ↗</small></a></li>`).join('');
+
+    const projectGrid = qs('#project-grid');
+    if (projectGrid) projectGrid.innerHTML = portfolio.projects.map(project => `<article class="project-card" tabindex="0"><div class="project-visual ${project.imageClass}" data-code="${project.code}" aria-hidden="true"><span class="visual-glyph">${project.code}</span></div><div class="project-body"><span class="project-type">${project.category}</span><h3>${project.title}</h3><p>${project.description}</p><div class="stack">${project.stack.map(item => `<span class="chip">${item}</span>`).join('')}</div><div class="project-links"><button class="text-button project-detail" type="button" data-project="${project.id}">Lihat detail ↗</button><a class="text-button" href="${project.demoUrl}" target="_blank" rel="noopener noreferrer">Demo ↗</a></div></div></article>`).join('');
+
+    const menuToggle = qs('.menu-toggle'); const navLinks = qs('.nav-links');
+    const closeMenu = () => { if (!menuToggle || !navLinks) return; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Buka menu navigasi'); navLinks.classList.remove('is-open'); };
+    if (menuToggle && navLinks) {
+      menuToggle.addEventListener('click', () => { const open = menuToggle.getAttribute('aria-expanded') === 'true'; menuToggle.setAttribute('aria-expanded', String(!open)); menuToggle.setAttribute('aria-label', open ? 'Buka menu navigasi' : 'Tutup menu navigasi'); navLinks.classList.toggle('is-open', !open); });
+      qsa('a', navLinks).forEach(link => link.addEventListener('click', closeMenu));
+      window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
+    }
+
+    const modalBackdrop = qs('#project-modal'); const modal = qs('.modal', modalBackdrop || document); const modalClose = qs('.modal-close', modalBackdrop || document); let lastFocused = null;
+    const openModal = (project) => {
+      if (!modalBackdrop || !project) return; lastFocused = document.activeElement; qs('#modal-category').textContent = project.category; qs('#modal-title').textContent = project.title; qs('#modal-description').textContent = project.description; qs('#modal-stack').innerHTML = project.stack.map(item => `<span class="chip">${item}</span>`).join(''); qs('#modal-demo').href = project.demoUrl; qs('#modal-source').href = project.sourceUrl; modalBackdrop.hidden = false; document.body.classList.add('modal-open'); modalClose && modalClose.focus();
+    };
+    const closeModal = () => { if (!modalBackdrop) return; modalBackdrop.hidden = true; document.body.classList.remove('modal-open'); if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus(); };
+    qsa('.project-detail').forEach(button => button.addEventListener('click', () => openModal(portfolio.projects.find(project => project.id === button.dataset.project))));
+    qsa('.project-card').forEach(card => card.addEventListener('keydown', event => {
+      if ((event.key === 'Enter' || event.key === ' ') && event.target === card) {
+        event.preventDefault();
+        const detailButton = qs('.project-detail', card);
+        if (detailButton) detailButton.click();
+      }
+    }));
+    if (modalClose) modalClose.addEventListener('click', closeModal);
+    if (modalBackdrop) { modalBackdrop.addEventListener('click', event => { if (event.target === modalBackdrop) closeModal(); }); modalBackdrop.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); if (event.key === 'Tab' && modal) { const focusable = qsa('button, a[href]', modal).filter(el => !el.disabled); if (!focusable.length) return; const first = focusable[0]; const last = focusable[focusable.length - 1]; if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } }); }
+
+    const copyButton = qs('#copy-email'); const copyStatus = qs('#copy-status');
+    if (copyButton) copyButton.addEventListener('click', async () => { const email = copyButton.dataset.email; try { await navigator.clipboard.writeText(email); if (copyStatus) copyStatus.textContent = 'Email tersalin ke clipboard.'; } catch (error) { if (copyStatus) copyStatus.textContent = `Salin manual: ${email}`; } });
+    const year = qs('#year'); if (year) year.textContent = new Date().getFullYear();
+
+    if (!reducedMotion && 'IntersectionObserver' in window) { const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .12 }); qsa('.reveal').forEach(element => observer.observe(element)); } else qsa('.reveal').forEach(element => element.classList.add('is-visible'));
+
+      const particleColors = ['#38bdf8', '#ffd166', '#fb4f9b', '#ff7043']; let activeParticles = 0; const maxParticles = 30;
+    const burst = (event) => { if (reducedMotion || activeParticles >= maxParticles || !event.target.closest('.button, .nav-cta, .text-button, .brand')) return; const amount = Math.min(4, maxParticles - activeParticles); for (let index = 0; index < amount; index += 1) { const particle = document.createElement('i'); particle.className = 'burst-particle'; particle.style.left = `${event.clientX}px`; particle.style.top = `${event.clientY}px`; particle.style.background = particleColors[index % particleColors.length]; particle.style.setProperty('--tx', `${(Math.random() - .5) * 70}px`); particle.style.setProperty('--ty', `${(Math.random() - .5) * 70}px`); document.body.appendChild(particle); activeParticles += 1; particle.addEventListener('animationend', () => { particle.remove(); activeParticles -= 1; }, { once: true }); } };
+    document.addEventListener('click', burst, { passive: true });
+  </script>
+</body>
+</html>
