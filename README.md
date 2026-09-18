@@ -1,19 +1,27 @@
 # Pelatihan Vibe Coding POLSRI 2026
 
-Repository ini digunakan untuk **menyimpan hasil pelatihan Vibe Coding** di Politeknik Negeri Sriwijaya (POLSRI) tahun 2026.
+Arsip dan dokumentasi tugas selama kegiatan pelatihan Vibe Coding di Politeknik Negeri Sriwijaya (POLSRI) 2026.
 
-> Dokumentasi pembelajaran dan latihan selama pelatihan berlangsung.
+Repository ini memuat project portofolio personal (Coolyeah) yang dibangun menggunakan vanilla HTML, CSS, dan JavaScript tanpa framework atau dependency tambahan.
+
+## Cara Menjalankan
+
+Jalankan server lokal menggunakan Node.js:
+
+```bash
+node server.js
+```
+
+Atau klik dua kali `run.bat` pada Windows, lalu buka `http://localhost:3000` di browser.
+
+## Struktur File
+
+- `index.html` — frontend portofolio (markup, styling, dan script)
+- `server.js` — static server sederhana berbasis Node.js
+- `run.bat` — helper script untuk menjalankan server di Windows
+- `prd.md` — catatan spesifikasi dan kebutuhan tampilan
 
 ---
-
-# Author
 
 **Bagaskara Amukti Palapa**  
-Mahasiswa Universitas Bina Darma 
-Teknik Informatika 2026
-
----
-
-## 📄 Lisensi
-
-Project ini dibuat untuk keperluan pelatihan dan pembelajaran. Bebas digunakan dan dimodifikasi.
+Teknik Informatika, Universitas Bina Darma
