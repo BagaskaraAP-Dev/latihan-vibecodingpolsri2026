@@ -9,7 +9,8 @@ Repository ini digunakan untuk **menyimpan hasil pelatihan Vibe Coding** di Poli
 # Author
 
 **Bagaskara Amukti Palapa**  
-Mahasiswa Universitas Bina Darma
+Mahasiswa Universitas Bina Darma 
+Teknik Informatika 2026
 
 ---
 
