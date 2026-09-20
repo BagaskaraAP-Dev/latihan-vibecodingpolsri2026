@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="8" fill="#040612"/>
+  <rect x="2" y="2" width="60" height="60" rx="6" fill="none" stroke="#FFE600" stroke-width="4"/>
+  <!-- Pixel Cyber Belida Fish Icon -->
+  <path d="M12 32 C12 24, 20 20, 32 20 C44 20, 52 24, 52 32 C52 40, 44 44, 32 44 C20 44, 12 40, 12 32 Z" fill="#00F0FF" stroke="#050718" stroke-width="2"/>
+  <circle cx="22" cy="28" r="4" fill="#FFFFFF"/>
+  <circle cx="22" cy="28" r="2" fill="#050718"/>
+  <polygon points="50,32 58,24 58,40" fill="#FF2E93" stroke="#050718" stroke-width="2"/>
+  <polygon points="32,20 38,12 42,20" fill="#FFE600" stroke="#050718" stroke-width="2"/>
+  <path d="M26 36 Q32 40 38 36" stroke="#050718" stroke-width="2" fill="none"/>
+</svg>

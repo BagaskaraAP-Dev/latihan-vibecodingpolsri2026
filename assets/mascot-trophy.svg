@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#070A1E" rx="12"/>
+  <rect x="4" y="4" width="192" height="192" fill="none" stroke="#FFE600" stroke-width="4" stroke-dasharray="8 8" rx="8"/>
+  <!-- Gold Trophy in hands -->
+  <path d="M125 70 L145 70 L140 100 Q135 115 125 115 Z" fill="#FFE600" stroke="#050718" stroke-width="2"/>
+  <circle cx="135" cy="85" r="16" fill="#FFE600" stroke="#050718" stroke-width="3"/>
+  <polygon points="135,76 138,83 145,83 140,88 142,95 135,90 128,95 130,88 125,83 132,83" fill="#FF2E93"/>
+  <!-- Champion Belibit with Gold Crown -->
+  <polygon points="70,72 80,55 90,68 100,55 110,72" fill="#FFE600" stroke="#050718" stroke-width="3"/>
+  <ellipse cx="85" cy="115" rx="50" ry="35" fill="#00F0FF" stroke="#050718" stroke-width="4"/>
+  <!-- Happy Closed Eyes -->
+  <path d="M55 108 Q65 100 75 108" fill="none" stroke="#050718" stroke-width="4" stroke-linecap="round"/>
+  <!-- Big Smile -->
+  <path d="M52 118 Q65 135 78 120" fill="#FF2E93" stroke="#050718" stroke-width="3"/>
+  <!-- Tail fin -->
+  <polygon points="130,115 165,90 155,115 165,140" fill="#FF2E93" stroke="#050718" stroke-width="3"/>
+  <!-- Text Label -->
+  <rect x="35" y="165" width="130" height="25" fill="#FFE600" stroke="#050718" stroke-width="2"/>
+  <text x="100" y="182" font-family="'Press Start 2P', monospace" font-size="8" fill="#050718" font-weight="bold" text-anchor="middle">CHAMPION POSE</text>
+</svg>

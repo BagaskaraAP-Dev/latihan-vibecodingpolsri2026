@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#070A1E" rx="12"/>
+  <rect x="4" y="4" width="192" height="192" fill="none" stroke="#00F0FF" stroke-width="4" stroke-dasharray="8 8" rx="8"/>
+  <!-- Belibit Idle Body -->
+  <ellipse cx="95" cy="105" rx="55" ry="38" fill="#00F0FF" stroke="#050718" stroke-width="4"/>
+  <!-- Belly -->
+  <ellipse cx="95" cy="115" rx="42" ry="24" fill="#FFE600" stroke="#050718" stroke-width="3"/>
+  <!-- Dorsal fin -->
+  <path d="M85 67 Q110 50 120 70 Z" fill="#FF2E93" stroke="#050718" stroke-width="3"/>
+  <!-- Tail fin -->
+  <polygon points="145,105 180,80 170,105 180,130" fill="#FF2E93" stroke="#050718" stroke-width="3"/>
+  <!-- Eyes -->
+  <circle cx="65" cy="95" r="10" fill="#FFFFFF" stroke="#050718" stroke-width="3"/>
+  <circle cx="63" cy="94" r="5" fill="#050718"/>
+  <circle cx="65" cy="92" r="2" fill="#FFFFFF"/>
+  <!-- Smile -->
+  <path d="M55 115 Q65 125 78 118" fill="none" stroke="#050718" stroke-width="3" stroke-linecap="round"/>
+  <!-- Text Label -->
+  <rect x="35" y="160" width="130" height="26" fill="#FFE600" stroke="#050718" stroke-width="2"/>
+  <text x="100" y="177" font-family="'Press Start 2P', monospace" font-size="9" fill="#050718" font-weight="bold" text-anchor="middle">BELIBIT IDLE</text>
+</svg>
