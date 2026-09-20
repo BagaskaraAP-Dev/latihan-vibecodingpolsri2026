@@ -638,16 +638,22 @@
             <div class="font-pixel text-[9px] text-cyan">STATUS TIKET</div>
             <div id="dash-stat-status" class="font-pixel text-xs sm:text-sm text-cream mt-2">-</div>
           </div>
-          <div class="col-span-2 sm:col-span-1 p-4 border-2 border-ink bg-navy-900 flex items-center justify-center">
+          <div class="col-span-2 sm:col-span-1 p-4 border-2 border-ink bg-navy-900 flex flex-col gap-2 justify-center">
             <button onclick="navigateTo('view-events')" class="press-btn w-full py-2.5 bg-yellow text-ink font-pixel text-[10px] font-bold border-2 border-ink shadow-hard-sm">
               + DAFTAR EVENT LAIN
+            </button>
+            <button onclick="exportUserData()" class="press-btn w-full py-1.5 bg-navy-700 hover:bg-navy-600 text-cyan font-pixel text-[8px] font-bold border border-ink shadow-hard-sm">
+              💾 BACKUP DATA (JSON)
             </button>
           </div>
         </div>
       </div>
 
       <div class="mt-8 border-3 border-ink bg-navy-800 p-6 shadow-hard">
-        <h3 class="font-pixel text-sm text-yellow mb-4">DAFTAR TIKET SAYA</h3>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-pixel text-sm text-yellow">DAFTAR TIKET SAYA</h3>
+          <span class="font-mono text-[10px] text-cream/60">Tersimpan di LocalStorage</span>
+        </div>
         <div id="dash-registrations-list" class="space-y-4"></div>
       </div>
     </section>
@@ -1164,6 +1170,26 @@
           alert('Email atau Password salah!');
         }
       }
+    });
+
+    function exportUserData() {
+      const data = {
+        app: 'IT-FESTIVAL 2026 POLSRI',
+        exportedAt: new Date().toISOString(),
+        currentUser: getCurrentUser(),
+        registrations: getRegistrations()
+      };
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `itfest-backup-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    $(document).on('keydown', function(e) {
+      if (e.key === 'Escape') closeAuthModal();
     });
 
     $(document).ready(function() {
