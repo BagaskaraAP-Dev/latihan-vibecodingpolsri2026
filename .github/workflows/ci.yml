@@ -1,0 +1,23 @@
+name: IT-Festival 2026 Verification CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  audit:
+    name: Validate Application & Event Schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Verification Test Suite
+        run: node test/verify-storage.js
