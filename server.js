@@ -60,7 +60,7 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, () => {
   const url = `http://localhost:${PORT}`;
   console.log(`\n======================================================`);
-  console.log(`[COOLYEAH PORTFOLIO]`);
+  console.log(`[IT-FESTIVAL 2026 POLSRI - VIBE CODING]`);
   console.log(`🌐 Server running at: ${url}`);
   console.log(`======================================================\n`);
 

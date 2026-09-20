@@ -1,358 +1,1200 @@
-<!doctype html>
-<html lang="id">
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Coolyeah — event-ready creative portfolio untuk pengalaman digital, visual, dan teknologi.">
-  <meta name="theme-color" content="#090b20">
-  <meta property="og:title" content="Coolyeah — Digital Experience Builder">
-  <meta property="og:description" content="Portofolio personal dengan karya digital, skill, dan cara berkolaborasi.">
-  <meta property="og:type" content="website">
-  <title>Coolyeah — Digital Experience Builder</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IT-FESTIVAL 2026 - Official Portal</title>
+  
+  <!-- Google Fonts: Press Start 2P, Pixelify Sans, Space Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@500;600;700&family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- jQuery 3.7.1 CDN -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Canvas Confetti CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              950: '#040612',
+              900: '#070a1e',
+              850: '#0d1330',
+              800: '#131b3e',
+              700: '#1b2654',
+            },
+            yellow: {
+              DEFAULT: '#FFE600',
+              dim: '#E6CF00',
+              glow: '#FFF566'
+            },
+            pink: {
+              DEFAULT: '#FF2E93',
+              hover: '#E0237E',
+              glow: '#FF70B8'
+            },
+            cyan: {
+              DEFAULT: '#00F0FF',
+              hover: '#00D1DF',
+              glow: '#70F7FF'
+            },
+            cream: '#F5F1E0',
+            ink: '#050718',
+          },
+          fontFamily: {
+            pixel: ['"Press Start 2P"', 'monospace'],
+            pixelify: ['"Pixelify Sans"', 'sans-serif'],
+            mono: ['"Space Mono"', 'monospace'],
+            sans: ['system-ui', '-apple-system', 'sans-serif'],
+          },
+          borderWidth: {
+            '3': '3px',
+            '4': '4px',
+          },
+          boxShadow: {
+            'hard-sm': '3px 3px 0px #050718',
+            'hard': '5px 5px 0px #050718',
+            'hard-lg': '8px 8px 0px #050718',
+            'hard-pink': '5px 5px 0px #FF2E93',
+            'hard-cyan': '5px 5px 0px #00F0FF',
+            'hard-yellow': '5px 5px 0px #FFE600',
+          },
+          animation: {
+            'float': 'floating 3s ease-in-out infinite',
+            'marquee': 'marquee 22s linear infinite',
+            'pulse-glow': 'pulseGlow 4s ease-in-out infinite',
+          },
+          keyframes: {
+            floating: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-8px) rotate(2deg)' },
+            },
+            marquee: {
+              '0%': { transform: 'translateX(0%)' },
+              '100%': { transform: 'translateX(-50%)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.2', transform: 'scale(1)' },
+              '50%': { opacity: '0.35', transform: 'scale(1.08)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <style>
-    :root {
-      --bg: #090b20;
-      --bg-soft: #111534;
-      --panel: rgba(19, 24, 62, .8);
-      --panel-solid: #151b46;
-      --line: rgba(153, 190, 255, .23);
-      --text: #f8fbff;
-      --muted: #b7c3e4;
-      --cyan: #38bdf8;
-      --lime: #ffd166;
-      --violet: #fb4f9b;
-      --amber: #ff7043;
-      --danger: #ff7e9c;
-      --display: 'Space Grotesk', 'Trebuchet MS', sans-serif;
-      --body: 'DM Sans', Arial, sans-serif;
-      --pixel: 'Press Start 2P', 'Courier New', monospace;
-      --max: 1160px;
-      --radius: 18px;
+    .bg-grid-pattern {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(245, 241, 224, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(245, 241, 224, 0.05) 1px, transparent 1px);
     }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-width: 320px;
-      overflow-x: hidden;
-      color: var(--text);
-      background: var(--bg);
-      font-family: var(--body);
-      line-height: 1.6;
+    .press-btn {
+      transition: all 0.15s ease-in-out;
     }
-    body.modal-open { overflow: hidden; }
-    a { color: inherit; }
-    button, a { -webkit-tap-highlight-color: transparent; }
-    button { font: inherit; }
-    :focus-visible { outline: 3px solid var(--lime); outline-offset: 4px; }
-    .skip-link {
-      position: fixed; left: 1rem; top: -5rem; z-index: 1000;
-      padding: .75rem 1rem; color: var(--bg); background: var(--lime); border-radius: 8px;
-      font-weight: 700; transition: top .2s ease;
+    .press-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0px #050718;
     }
-    .skip-link:focus { top: 1rem; }
-
-    .scene {
-      position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none;
-      background: radial-gradient(circle at 78% 18%, rgba(56, 189, 248, .2), transparent 25rem),
-        radial-gradient(circle at 12% 56%, rgba(251, 79, 155, .18), transparent 28rem),
-        radial-gradient(circle at 58% 82%, rgba(255, 112, 67, .1), transparent 24rem),
-        linear-gradient(165deg, #18255c 0%, var(--bg) 56%, #050712 100%);
+    .press-btn:active {
+      transform: translate(3px, 3px);
+      box-shadow: 1px 1px 0px #050718;
     }
-    .scene::before {
-      content: ''; position: absolute; left: -10%; right: -10%; bottom: -24%; height: 68%; opacity: .5;
-      background-image: linear-gradient(rgba(56, 189, 248, .2) 1px, transparent 1px), linear-gradient(90deg, rgba(251, 79, 155, .18) 1px, transparent 1px);
-      background-size: 72px 72px; transform: perspective(500px) rotateX(62deg); transform-origin: bottom;
-      mask-image: linear-gradient(to top, black, transparent 84%);
+    .pixel-art {
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
     }
-    .scene::after { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 35%, rgba(2, 4, 14, .62) 100%); }
-    .scene-orb { position: absolute; width: 11rem; aspect-ratio: 1; border-radius: 25%; opacity: .18; filter: blur(1px); transform-style: preserve-3d; }
-    .scene-orb::before, .scene-orb::after { content: ''; position: absolute; inset: 12%; border: 1px solid currentColor; }
-    .scene-orb::before { transform: rotate(45deg); } .scene-orb::after { transform: rotate(-45deg); }
-    .orb-one { top: 15%; left: 7%; color: var(--lime); transform: rotate(20deg) skew(-8deg); animation: drift 13s ease-in-out infinite; }
-    .orb-two { top: 27%; right: 8%; color: var(--cyan); width: 8rem; transform: rotate(34deg); animation: drift 17s ease-in-out -3s infinite reverse; }
-    .orb-three { bottom: 9%; left: 45%; color: var(--violet); width: 6rem; animation: drift 12s ease-in-out -5s infinite; }
-    @keyframes drift { 50% { translate: 0 -18px; rotate: 8deg; } }
-    .scene-particles { position: absolute; inset: 0; }
-    .scene-particle { position: absolute; width: 4px; height: 4px; background: var(--cyan); box-shadow: 0 0 12px var(--cyan); opacity: .65; }
-    .scene-particle:nth-child(1) { top: 18%; left: 23%; } .scene-particle:nth-child(2) { top: 37%; left: 81%; background: var(--lime); }
-    .scene-particle:nth-child(3) { top: 63%; left: 13%; background: var(--violet); } .scene-particle:nth-child(4) { top: 73%; left: 72%; }
-    .scene-particle:nth-child(5) { top: 11%; left: 61%; background: var(--amber); } .scene-particle:nth-child(6) { top: 49%; left: 54%; background: var(--lime); }
-
-    .site-header { position: sticky; top: 0; z-index: 50; padding: 1rem 1.25rem; background: rgba(7, 11, 29, .72); border-bottom: 1px solid rgba(157,177,255,.15); backdrop-filter: blur(18px); }
-    .nav-wrap { max-width: var(--max); margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-    .brand { display: inline-flex; align-items: center; gap: .65rem; color: var(--text); text-decoration: none; font: 700 1rem var(--display); letter-spacing: .03em; }
-    .brand-mark { display: grid; place-items: center; width: 2.15rem; height: 2.15rem; color: var(--bg); background: var(--amber); border: 3px solid var(--text); box-shadow: 4px 4px 0 var(--violet); font: .7rem var(--pixel); }
-    .nav-links { display: flex; align-items: center; gap: 1.45rem; margin: 0; padding: 0; list-style: none; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 600; transition: color .2s ease; }
-    .nav-links a:hover { color: var(--cyan); }
-    .nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: .55rem; min-height: 2.8rem; padding: .7rem 1.05rem; border: 1px solid transparent; border-radius: 9px; color: var(--bg); background: var(--amber); text-decoration: none; font-weight: 700; cursor: pointer; box-shadow: 4px 4px 0 var(--violet); transition: transform .2s ease, filter .2s ease, box-shadow .2s ease; }
-    .nav-cta:hover, .button:hover { transform: translate(-2px, -2px); filter: brightness(1.06); box-shadow: 6px 6px 0 rgba(168,140,255,.65); }
-    .button.secondary { color: var(--text); background: rgba(19, 24, 62, .68); border-color: var(--line); box-shadow: 4px 4px 0 rgba(56,189,248,.45); }
-    .button.small { min-height: 2.35rem; padding: .5rem .75rem; font-size: .83rem; }
-    .menu-toggle { display: none; width: 2.8rem; height: 2.8rem; color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
-    .menu-toggle span, .menu-toggle::before, .menu-toggle::after { display: block; width: 1.2rem; height: 2px; margin: .25rem auto; content: ''; background: currentColor; }
-
-    main { position: relative; }
-    .section, .hero { max-width: var(--max); margin: 0 auto; padding: 6.5rem 1.25rem; scroll-margin-top: 4.8rem; }
-    .hero { min-height: min(860px, calc(100vh - 4.7rem)); display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(2.5rem, 7vw, 6rem); padding-top: 5.5rem; }
-    .event-ribbon { display: inline-flex; align-items: center; gap: .55rem; margin-bottom: 1.25rem; padding: .42rem .65rem; color: var(--bg); background: var(--lime); box-shadow: 4px 4px 0 var(--violet); font: .56rem var(--pixel); }
-    .event-ribbon::before { content: 'LIVE'; padding: .2rem .32rem; color: var(--text); background: var(--violet); font-size: .45rem; }
-    .eyebrow { display: inline-flex; align-items: center; gap: .65rem; color: var(--lime); font: .62rem var(--pixel); letter-spacing: .08em; line-height: 1.8; }
-    .eyebrow::before { content: ''; width: .65rem; height: .65rem; background: var(--lime); box-shadow: 0 0 18px var(--lime); }
-    h1, h2, h3 { margin: 0; font-family: var(--display); line-height: 1.05; letter-spacing: -.045em; }
-    h1 { max-width: 11ch; margin-top: 1.2rem; font-size: clamp(3rem, 7vw, 6.5rem); }
-    h1 .accent { color: var(--cyan); text-shadow: 0 0 32px rgba(92,236,255,.28); }
-    .hero-copy { max-width: 39rem; margin-top: 1.5rem; color: var(--muted); font-size: clamp(1rem, 2vw, 1.15rem); }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: .85rem; margin-top: 2rem; }
-    .micro-meta { display: flex; flex-wrap: wrap; gap: .7rem 1.4rem; margin-top: 1.6rem; color: var(--muted); font-size: .82rem; }
-    .micro-meta span { display: inline-flex; align-items: center; gap: .4rem; }
-    .micro-meta span::before { content: '◆'; color: var(--violet); font-size: .6rem; }
-
-    .hero-art { position: relative; min-height: 31rem; display: grid; place-items: center; perspective: 1000px; }
-    .art-aura { position: absolute; width: min(31rem, 90vw); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(92,236,255,.2), rgba(168,140,255,.09) 42%, transparent 68%); }
-    .voxel-frame { position: relative; width: min(20rem, 78vw); aspect-ratio: .82; padding: .8rem; background: linear-gradient(135deg, rgba(92,236,255,.7), rgba(168,140,255,.72) 55%, rgba(201,255,90,.6)); clip-path: polygon(9% 0, 100% 0, 100% 89%, 89% 100%, 0 100%, 0 11%); transform: rotate(4deg); box-shadow: 18px 18px 0 rgba(8,12,33,.75); }
-    .voxel-frame::before { content: ''; position: absolute; inset: .8rem; background: #0b1030; clip-path: inherit; }
-    .profile-image { position: absolute; inset: 1.35rem; width: calc(100% - 2.7rem); height: calc(100% - 2.7rem); object-fit: cover; object-position: center; clip-path: polygon(8% 0, 100% 0, 100% 89%, 89% 100%, 0 100%, 0 11%); filter: saturate(.9) contrast(1.05); }
-    .image-fallback { position: absolute; inset: 1.35rem; display: grid; place-items: center; padding: 1rem; color: var(--muted); background: linear-gradient(145deg, #162557, #211943); text-align: center; font: .7rem var(--pixel); }
-    .profile-image:not([hidden]) + .image-fallback { display: none; }
-    .voxel-badge { position: absolute; right: -2rem; bottom: 2rem; max-width: 10rem; padding: .8rem; color: var(--bg); background: var(--lime); box-shadow: 7px 7px 0 var(--violet); font-size: .76rem; font-weight: 700; line-height: 1.3; }
-    .voxel-badge strong { display: block; font: .58rem var(--pixel); }
-    .art-cube { position: absolute; width: 3.5rem; height: 3.5rem; border: 5px solid var(--cyan); background: rgba(92,236,255,.12); transform: rotate(30deg) skewY(-12deg); box-shadow: 1.4rem 1.4rem 0 rgba(168,140,255,.35); animation: cubeFloat 6s ease-in-out infinite; }
-    .cube-one { top: 10%; left: 7%; } .cube-two { right: 2%; bottom: 9%; width: 2.5rem; height: 2.5rem; border-color: var(--amber); animation-delay: -2s; }
-    @keyframes cubeFloat { 50% { transform: translateY(-14px) rotate(45deg) skewY(-12deg); } }
-
-    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; }
-    .section-kicker { display: block; margin-bottom: .8rem; color: var(--cyan); font: .62rem var(--pixel); letter-spacing: .09em; }
-    h2 { font-size: clamp(2.3rem, 5vw, 4rem); }
-    .section-intro { max-width: 31rem; color: var(--muted); }
-    .panel { background: linear-gradient(145deg, rgba(18,29,69,.87), rgba(9,15,38,.75)); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: 10px 10px 0 rgba(3,6,20,.38); }
-    .about-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 1.25rem; }
-    .about-copy { padding: clamp(1.5rem, 4vw, 2.4rem); }
-    .about-copy p { margin: 0 0 1rem; color: var(--muted); }
-    .about-copy p:last-child { margin-bottom: 0; }
-    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; overflow: hidden; }
-    .stat { display: flex; min-height: 8rem; flex-direction: column; justify-content: center; padding: 1.4rem; background: rgba(92,236,255,.04); border: 1px solid rgba(157,177,255,.12); }
-    .stat strong { color: var(--lime); font: 700 clamp(1.8rem, 4vw, 2.8rem) var(--display); }
-    .stat span { color: var(--muted); font-size: .84rem; }
-    .journey { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1.25rem; }
-    .journey-item { position: relative; padding: 1.25rem 1.1rem 1.2rem; border-top: 2px solid var(--violet); background: rgba(15,23,55,.65); }
-    .journey-item::before { content: ''; position: absolute; top: -.55rem; left: 1rem; width: .85rem; height: .85rem; background: var(--lime); border: 3px solid var(--bg); }
-    .journey-item b { display: block; margin-bottom: .35rem; color: var(--cyan); font: .58rem var(--pixel); }
-    .journey-item h3 { margin-bottom: .4rem; font-size: 1.1rem; letter-spacing: -.02em; }
-    .journey-item p { margin: 0; color: var(--muted); font-size: .87rem; }
-
-    .projects-section { max-width: none; padding-left: max(1.25rem, calc((100vw - var(--max)) / 2 + 1.25rem)); padding-right: max(1.25rem, calc((100vw - var(--max)) / 2 + 1.25rem)); }
-    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
-    .project-card { display: flex; flex-direction: column; min-width: 0; overflow: hidden; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); transition: transform .25s ease, border-color .25s ease; }
-    .project-card:hover, .project-card:focus-within { transform: translateY(-7px) rotateX(1deg) rotateY(-1deg); border-color: rgba(92,236,255,.7); }
-    .project-visual { position: relative; min-height: 11rem; display: grid; place-items: center; overflow: hidden; background: #121d46; }
-    .project-visual::before { content: ''; position: absolute; width: 11rem; height: 7rem; border: 1px solid var(--cyan); transform: rotate(-15deg) skewX(-20deg); box-shadow: 2rem 1.2rem 0 rgba(168,140,255,.35), -2rem -1.2rem 0 rgba(201,255,90,.18); }
-    .project-visual::after { content: attr(data-code); position: absolute; right: 1rem; bottom: .8rem; color: rgba(245,247,255,.58); font: .55rem var(--pixel); }
-    .visual-two { background: #1d1745; } .visual-two::before { border-color: var(--violet); transform: rotate(25deg) skewX(-20deg); } .visual-three { background: #122f42; } .visual-three::before { border-color: var(--lime); transform: rotate(-3deg) skewX(-25deg); }
-    .visual-glyph { position: relative; z-index: 1; color: var(--text); font: clamp(1.5rem, 4vw, 2.5rem) var(--pixel); text-shadow: 5px 5px 0 rgba(3,6,20,.65); }
-    .project-body { display: flex; flex: 1; flex-direction: column; padding: 1.35rem; }
-    .project-type { color: var(--lime); font: .55rem var(--pixel); letter-spacing: .05em; }
-    .project-body h3 { margin: .6rem 0; font-size: 1.5rem; letter-spacing: -.03em; }
-    .project-body p { margin: 0; color: var(--muted); font-size: .9rem; }
-    .stack { display: flex; flex-wrap: wrap; gap: .4rem; margin: 1rem 0 1.25rem; }
-    .chip { display: inline-flex; padding: .35rem .55rem; color: #dce7ff; background: rgba(92,236,255,.08); border: 1px solid rgba(92,236,255,.2); border-radius: 5px; font-size: .72rem; }
-    .project-links { display: flex; flex-wrap: wrap; gap: .65rem; margin-top: auto; }
-    .text-button { padding: .3rem 0; color: var(--cyan); background: none; border: 0; font-weight: 700; cursor: pointer; }
-    .text-button:hover { color: var(--lime); }
-
-    .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-    .skill-panel { padding: 1.5rem; }
-    .skill-panel h3 { margin-bottom: 1.15rem; font-size: 1.3rem; letter-spacing: -.02em; }
-    .skill-list { display: flex; flex-wrap: wrap; gap: .6rem; margin: 0; padding: 0; list-style: none; }
-    .skill-list li { padding: .55rem .7rem; color: var(--text); background: rgba(168,140,255,.1); border: 1px solid rgba(168,140,255,.3); border-radius: 6px; font-size: .84rem; }
-    .skill-meter { margin-top: 1.8rem; }
-    .meter-row { margin-top: 1rem; }
-    .meter-label { display: flex; justify-content: space-between; color: var(--muted); font-size: .82rem; }
-    .meter-track { height: .5rem; margin-top: .4rem; overflow: hidden; background: #070b1d; border-radius: 2px; }
-    .meter-fill { display: block; width: var(--level); height: 100%; background: linear-gradient(90deg, var(--cyan), var(--lime)); }
-
-    .contact-panel { position: relative; display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; overflow: hidden; padding: clamp(1.6rem, 5vw, 3.2rem); }
-    .contact-panel::after { content: 'CONTACT'; position: absolute; right: -1rem; bottom: -1.7rem; color: rgba(92,236,255,.08); font: 4rem var(--pixel); pointer-events: none; }
-    .contact-panel h2 { max-width: 11ch; }
-    .contact-panel p { max-width: 30rem; color: var(--muted); }
-    .contact-actions { display: flex; align-items: flex-start; flex-wrap: wrap; gap: .8rem; margin-top: 1.4rem; }
-    .contact-list { position: relative; z-index: 1; display: grid; align-content: center; gap: .8rem; margin: 0; padding: 0; list-style: none; }
-    .contact-list a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .9rem 1rem; color: var(--text); background: rgba(92,236,255,.05); border: 1px solid var(--line); border-radius: 8px; text-decoration: none; }
-    .contact-list a:hover { border-color: var(--cyan); }
-    .contact-list small { color: var(--muted); font-size: .75rem; }
-    .copy-status { min-height: 1.5em; color: var(--lime); font-size: .78rem; }
-    footer { max-width: var(--max); margin: 0 auto; padding: 2rem 1.25rem 2.5rem; display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); border-top: 1px solid rgba(157,177,255,.14); font-size: .8rem; }
-    footer a { color: var(--cyan); text-decoration: none; }
-
-    .modal-backdrop { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 1rem; background: rgba(2,4,14,.8); backdrop-filter: blur(8px); }
-    .modal-backdrop[hidden] { display: none; }
-    .modal { position: relative; width: min(42rem, 100%); max-height: min(40rem, 90vh); overflow: auto; padding: clamp(1.4rem, 4vw, 2.5rem); background: var(--panel-solid); border: 1px solid var(--cyan); border-radius: var(--radius); box-shadow: 10px 10px 0 rgba(168,140,255,.35); }
-    .modal-close { position: absolute; top: 1rem; right: 1rem; width: 2.3rem; height: 2.3rem; color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; }
-    .modal h2 { padding-right: 2.5rem; font-size: clamp(1.9rem, 5vw, 3rem); }
-    .modal-content { color: var(--muted); }
-    .modal-content strong { color: var(--text); }
-    .modal-content .stack { margin: 1.25rem 0; }
-    .reveal { opacity: 0; translate: 0 18px; transition: opacity .65s ease, translate .65s ease; }
-    .reveal.is-visible { opacity: 1; translate: 0; }
-    .burst-particle { position: fixed; z-index: 200; width: 7px; height: 7px; pointer-events: none; animation: burst .7s ease-out forwards; }
-    @keyframes burst { to { translate: var(--tx) var(--ty); scale: 0; opacity: 0; } }
-
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; min-height: auto; padding-top: 5rem; }
-      .hero-art { min-height: 28rem; order: -1; }
-      .hero-content { text-align: center; } .hero-content .eyebrow, .micro-meta { justify-content: center; }
-      h1 { max-width: none; } .hero-actions { justify-content: center; }
-      .project-grid { grid-template-columns: repeat(2, 1fr); }
+    ::-webkit-scrollbar {
+      width: 10px;
     }
-    @media (max-width: 680px) {
-      .site-header { padding: .75rem 1rem; } .menu-toggle { display: block; }
-      .nav-links { position: absolute; top: calc(100% + 1px); left: 0; right: 0; display: none; flex-direction: column; align-items: stretch; gap: 0; padding: .6rem 1rem 1rem; background: rgba(7,11,29,.97); border-bottom: 1px solid var(--line); }
-      .nav-links.is-open { display: flex; } .nav-links li { border-bottom: 1px solid rgba(157,177,255,.12); } .nav-links a { display: block; padding: .8rem .3rem; }
-      .nav-links .nav-cta { margin-top: .7rem; text-align: center; }
-      .section, .hero { padding-top: 4.5rem; padding-bottom: 4.5rem; } .section-heading { display: block; }
-      .section-intro { margin-top: 1rem; } .about-grid, .skills-layout, .contact-panel { grid-template-columns: 1fr; }
-      .journey { grid-template-columns: 1fr; } .project-grid { grid-template-columns: 1fr; }
-      .project-visual { min-height: 10rem; } .contact-panel h2 { max-width: 15ch; } footer { flex-direction: column; }
+    ::-webkit-scrollbar-track {
+      background: #070a1e;
+      border-left: 2px solid #050718;
     }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-      .reveal { opacity: 1; translate: none; } .scene-orb, .art-cube { animation: none; }
+    ::-webkit-scrollbar-thumb {
+      background: #FFE600;
+      border: 2px solid #050718;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #FF2E93;
     }
   </style>
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
-  <div class="scene" aria-hidden="true">
-    <div class="scene-orb orb-one"></div><div class="scene-orb orb-two"></div><div class="scene-orb orb-three"></div>
-    <div class="scene-particles"><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i><i class="scene-particle"></i></div>
-  </div>
 
-  <header class="site-header">
-    <nav class="nav-wrap" aria-label="Navigasi utama">
-      <a class="brand" href="#home" aria-label="Coolyeah, kembali ke beranda"><span class="brand-mark">CY</span><span>coolyeah<span style="color:var(--cyan)">.</span></span></a>
-      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="primary-menu" aria-label="Buka menu navigasi"><span></span></button>
-      <ul class="nav-links" id="primary-menu">
-        <li><a href="#home">Home</a></li><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li><li><a href="#skills">Skills</a></li><li><a href="#contact">Contact</a></li>
-        <li><a class="nav-cta" href="#contact">Let's collaborate <span aria-hidden="true">↗</span></a></li>
-      </ul>
+<body class="bg-navy-950 text-cream font-sans antialiased relative overflow-x-hidden selection:bg-yellow selection:text-ink min-h-screen flex flex-col">
+
+  <!-- Glow Blobs & Grid Pattern -->
+  <div class="fixed inset-0 bg-grid-pattern pointer-events-none -z-30"></div>
+  <div class="fixed top-[-10%] left-[5%] w-96 h-96 bg-pink/20 rounded-full blur-[140px] pointer-events-none animate-pulse-glow -z-20"></div>
+  <div class="fixed bottom-[-10%] right-[5%] w-96 h-96 bg-cyan/20 rounded-full blur-[140px] pointer-events-none animate-pulse-glow -z-20"></div>
+  <div class="fixed top-[40%] right-[20%] w-80 h-80 bg-yellow/15 rounded-full blur-[120px] pointer-events-none animate-pulse-glow -z-20"></div>
+
+  <!-- Floating Pixel Elements -->
+  <div class="fixed top-24 left-6 w-7 h-7 bg-pink border-3 border-ink rotate-[-12deg] hidden lg:block animate-float -z-10 opacity-70"></div>
+  <div class="fixed top-1/3 right-8 w-8 h-8 bg-cyan border-3 border-ink rotate-[15deg] hidden lg:block animate-float -z-10 opacity-70" style="animation-delay:1.5s"></div>
+  <div class="fixed bottom-32 left-10 w-6 h-6 bg-yellow border-3 border-ink rotate-[25deg] hidden lg:block animate-float -z-10 opacity-70" style="animation-delay:2.5s"></div>
+  <div class="fixed bottom-1/4 right-16 w-5 h-5 bg-pink border-3 border-ink rotate-[-20deg] hidden lg:block animate-float -z-10 opacity-70" style="animation-delay:0.8s"></div>
+
+  <!-- TOP NAVBAR -->
+  <header class="fixed top-0 left-0 right-0 z-50 pt-4 px-4 md:px-6 max-w-6xl mx-auto">
+    <nav class="relative flex items-center justify-between border-3 bg-navy-800/90 backdrop-blur-md border-ink shadow-hard px-5 md:px-7 py-3">
+      <div class="absolute -top-2 -left-2 w-4 h-4 bg-pink border-3 border-ink hidden md:block rotate-12"></div>
+      <div class="absolute -bottom-2 -right-2 w-4 h-4 bg-cyan border-3 border-ink hidden md:block -rotate-12"></div>
+
+      <!-- Brand -->
+      <a href="javascript:void(0)" onclick="navigateTo('view-landing')" class="flex items-center gap-2.5 z-10 group">
+        <div class="w-8 h-8 md:w-9 md:h-9 bg-yellow border-2 border-ink shadow-hard-sm flex items-center justify-center font-pixel text-ink text-sm font-bold group-hover:rotate-12 transition-transform">
+          ⚡
+        </div>
+        <span class="text-yellow text-sm md:text-base lg:text-lg tracking-widest font-extrabold font-pixel">
+          IT-FESTIVAL
+        </span>
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center gap-6 lg:gap-8 font-pixel text-xs absolute left-1/2 -translate-x-1/2">
+        <button onclick="navigateTo('view-landing')" class="nav-link text-yellow font-bold hover:text-pink transition-colors">HOME</button>
+        <button onclick="navigateToTab('kompetisi')" class="nav-link text-cream/80 hover:text-yellow transition-colors">KOMPETISI</button>
+        <button onclick="navigateToTab('pelatihan')" class="nav-link text-cream/80 hover:text-yellow transition-colors">PELATIHAN</button>
+        <button onclick="navigateToTab('seminar')" class="nav-link text-cream/80 hover:text-yellow transition-colors">SEMINAR</button>
+        <button onclick="navigateTo('view-dashboard')" id="nav-dashboard-link" class="nav-link text-cyan hover:text-yellow transition-colors hidden">DASHBOARD</button>
+      </div>
+
+      <!-- Auth Zone -->
+      <div class="hidden md:flex items-center gap-3 z-10">
+        <div id="auth-guest-zone">
+          <button onclick="openAuthModal('login')" class="press-btn border-3 border-ink shadow-hard-sm text-ink font-pixel text-xs font-bold px-3 py-1.5 bg-navy-700 text-cream hover:bg-navy-600">
+            LOGIN
+          </button>
+          <button onclick="openAuthModal('register')" class="press-btn border-3 border-ink shadow-hard-sm text-ink font-pixel text-xs font-extrabold px-4 py-2 bg-yellow hover:bg-yellow-dim ml-2">
+            Register &gt;
+          </button>
+        </div>
+        <div id="auth-user-zone" class="hidden flex items-center gap-3">
+          <span id="user-greeting" class="font-mono text-xs text-yellow font-bold">Halo, Peserta!</span>
+          <button onclick="logoutUser()" class="press-btn px-3 py-1.5 bg-pink text-ink font-pixel text-[9px] font-bold border-2 border-ink shadow-hard-sm">
+            LOGOUT
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Burger -->
+      <button id="menu-btn" class="md:hidden text-cream text-xl z-10 p-1" aria-label="Toggle menu">☰</button>
     </nav>
+
+    <!-- Mobile Dropdown -->
+    <div id="mobile-menu" class="hidden md:hidden mt-2 bg-navy-900 border-3 border-ink shadow-hard p-4 flex flex-col gap-3 font-pixel text-xs">
+      <button onclick="navigateTo('view-landing')" class="text-left py-2 px-3 hover:bg-navy-800 text-yellow">HOME</button>
+      <button onclick="navigateToTab('kompetisi')" class="text-left py-2 px-3 hover:bg-navy-800 text-cream">KOMPETISI</button>
+      <button onclick="navigateToTab('pelatihan')" class="text-left py-2 px-3 hover:bg-navy-800 text-cream">PELATIHAN</button>
+      <button onclick="navigateToTab('seminar')" class="text-left py-2 px-3 hover:bg-navy-800 text-cream">SEMINAR</button>
+      <button onclick="navigateTo('view-dashboard')" class="text-left py-2 px-3 hover:bg-navy-800 text-cyan">DASHBOARD SAYA</button>
+      <div class="pt-2 border-t border-ink/40">
+        <button onclick="openAuthModal('login')" class="w-full py-2 bg-yellow text-ink font-bold border-2 border-ink mb-2">LOGIN</button>
+        <button onclick="openAuthModal('register')" class="w-full py-2 bg-pink text-ink font-bold border-2 border-ink">REGISTER AKUN</button>
+      </div>
+    </div>
   </header>
 
-  <main id="main-content">
-    <section class="hero" id="home" aria-labelledby="hero-title">
-      <div class="hero-content reveal">
-        <div class="event-ribbon">CREATIVE TECH EVENT / 2026</div>
-        <span class="eyebrow">AVAILABLE FOR CREATIVE COLLABS</span>
-        <h1 id="hero-title">Saya membangun pengalaman digital yang <span class="accent">berani tampil.</span></h1>
-        <p class="hero-copy">Developer dan designer yang merangkai interface, motion, dan teknologi menjadi pengalaman event yang mudah diingat — dari layar pertama sampai ajakan kolaborasi.</p>
-        <div class="hero-actions"><a class="button" href="#projects">Lihat proyek <span aria-hidden="true">↓</span></a><a class="button secondary" href="CV-Coolyeah.pdf" download>Download CV <span aria-hidden="true">↗</span></a></div>
-        <div class="micro-meta"><span>Stage-ready visual</span><span>Berbasis di Indonesia</span><span>Open to remote</span></div>
+  <!-- MAIN SPA VIEWS ROUTER -->
+  <main class="flex-grow pt-24 pb-16">
+
+    <!-- ======================================================== -->
+    <!-- 1. VIEW: LANDING PAGE -->
+    <!-- ======================================================== -->
+    <section id="view-landing" class="spa-view max-w-6xl mx-auto px-6 pt-10 pb-16 flex flex-col items-center text-center">
+      
+      <!-- Announcement Banner -->
+      <div class="inline-flex items-center gap-2 font-pixel text-xs md:text-sm font-bold bg-gradient-to-r from-pink via-yellow to-cyan text-ink border-3 border-ink shadow-hard px-5 py-2 rotate-[-1.5deg] tracking-widest uppercase mb-6">
+        <span>✦ THE BIGGEST IT-FESTIVAL 2026 ✦</span>
       </div>
-      <div class="hero-art reveal" aria-label="Foto profil Coolyeah dalam frame voxel">
-        <div class="art-aura" aria-hidden="true"></div><div class="art-cube cube-one" aria-hidden="true"></div><div class="art-cube cube-two" aria-hidden="true"></div>
-        <div class="voxel-frame"><img class="profile-image" src="fotosaya.jpeg" alt="Foto profil Coolyeah" width="640" height="780"><div class="image-fallback" aria-hidden="true">FOTO<br>COOLYEAH</div><div class="voxel-badge"><strong>STATUS_01</strong>Turning ideas<br>into interfaces.</div></div>
+
+      <!-- Typewriter Hero Title -->
+      <div class="relative py-1 flex items-center justify-center min-h-[70px] sm:min-h-[100px] md:min-h-[140px]">
+        <h1 class="font-pixel leading-[1.45] text-[24px] sm:text-[34px] md:text-[50px] lg:text-[52px] tracking-tight max-w-4xl drop-shadow-[0_5px_0_rgba(5,7,24,1)]">
+          <span id="typewriter" class="text-cream"></span><span class="inline-block w-[4px] md:w-[6px] h-[0.9em] bg-yellow ml-1.5 animate-pulse align-middle"></span>
+        </h1>
+      </div>
+
+      <!-- Countdown Timer Box -->
+      <div class="w-full max-w-2xl bg-navy-800/90 backdrop-blur-xl border-3 border-ink shadow-hard p-5 md:p-7 rounded-sm relative mt-4">
+        <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 font-pixel text-[10px] md:text-xs bg-yellow text-ink border-2 border-ink shadow-hard-sm px-5 py-1 uppercase font-extrabold tracking-widest whitespace-nowrap z-20">
+          ⏰ BERAKHIR DALAM
+        </div>
+        <div class="grid grid-cols-4 gap-2 sm:gap-3.5 md:gap-4 w-full max-w-xl mx-auto">
+          <div class="border-3 border-ink shadow-hard bg-navy-900/90 py-3 sm:py-4 md:py-5 px-1 sm:px-3 text-center rounded-sm">
+            <div id="days" class="font-pixelify text-2xl sm:text-4xl md:text-5xl font-bold text-yellow">04</div>
+            <div class="text-[8px] sm:text-[10px] md:text-xs font-pixel font-bold text-pink mt-1 uppercase tracking-wider">HARI</div>
+          </div>
+          <div class="border-3 border-ink shadow-hard bg-navy-900/90 py-3 sm:py-4 md:py-5 px-1 sm:px-3 text-center rounded-sm">
+            <div id="hours" class="font-pixelify text-2xl sm:text-4xl md:text-5xl font-bold text-yellow">10</div>
+            <div class="text-[8px] sm:text-[10px] md:text-xs font-pixel font-bold text-pink mt-1 uppercase tracking-wider">JAM</div>
+          </div>
+          <div class="border-3 border-ink shadow-hard bg-navy-900/90 py-3 sm:py-4 md:py-5 px-1 sm:px-3 text-center rounded-sm">
+            <div id="minutes" class="font-pixelify text-2xl sm:text-4xl md:text-5xl font-bold text-yellow">52</div>
+            <div class="text-[8px] sm:text-[10px] md:text-xs font-pixel font-bold text-pink mt-1 uppercase tracking-wider">MENIT</div>
+          </div>
+          <div class="border-3 border-ink shadow-hard bg-navy-900/90 py-3 sm:py-4 md:py-5 px-1 sm:px-3 text-center rounded-sm">
+            <div id="seconds" class="font-pixelify text-2xl sm:text-4xl md:text-5xl font-bold text-yellow">51</div>
+            <div class="text-[8px] sm:text-[10px] md:text-xs font-pixel font-bold text-pink mt-1 uppercase tracking-wider">DETIK</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-center gap-4 pt-6">
+        <button onclick="navigateTo('view-events')" class="press-btn border-3 border-ink shadow-hard bg-yellow text-ink font-pixel text-xs md:text-sm px-7 py-3.5 font-extrabold flex items-center gap-2 hover:bg-yellow-dim">
+          <span>DAFTAR SEKARANG</span><span>&gt;</span>
+        </button>
+        <button onclick="navigateToTab('kompetisi')" class="press-btn border-3 border-ink shadow-hard bg-navy-700 hover:bg-navy-800 text-cream font-pixel text-xs md:text-sm px-6 py-3.5 font-bold flex items-center gap-2">
+          <span>JELAJAHI EVENT</span><span class="text-pink">↓</span>
+        </button>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- 4-SLOT MASCOT PHOTO SHOWCASE (BELIBIT / CUSTOM AVATAR) -->
+      <!-- ======================================================== -->
+      <div class="w-full max-w-5xl mt-16 text-left">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <span class="font-pixel text-[10px] text-pink tracking-widest uppercase">◆ OFFICIAL MASCOT GALLERY</span>
+            <h3 class="font-pixel text-lg sm:text-2xl text-yellow mt-1">4 POSE MASKOT RESMI: BELIBIT</h3>
+          </div>
+          <span class="hidden sm:inline-block font-mono text-xs text-cyan">Ikan Belida Cyberpunk Palembang</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <!-- Slot 1 -->
+          <div class="border-3 border-ink bg-navy-800 p-4 shadow-hard flex flex-col items-center text-center group hover:-translate-y-1 transition-transform border-t-4 border-yellow">
+            <span class="font-pixel text-[8px] bg-yellow text-ink px-2 py-0.5 border border-ink font-bold mb-3">1. DEFAULT IDLE</span>
+            <div class="w-28 h-28 sm:w-36 sm:h-36 bg-navy-900 border-2 border-ink flex items-center justify-center p-2 relative overflow-hidden">
+              <img id="mascot-img-1" src="https://api.iconify.design/pixelarticons:avatar.svg?color=%23FFE600" alt="Maskot Pose 1" class="w-full h-full object-contain pixel-art animate-float" />
+            </div>
+            <div class="mt-3">
+              <strong class="font-pixel text-[10px] text-cream block">Pose Utama</strong>
+              <span class="font-mono text-[10px] text-cream/60">Maskot Siaga / Netral</span>
+            </div>
+          </div>
+          <!-- Slot 2 -->
+          <div class="border-3 border-ink bg-navy-800 p-4 shadow-hard flex flex-col items-center text-center group hover:-translate-y-1 transition-transform border-t-4 border-pink">
+            <span class="font-pixel text-[8px] bg-pink text-ink px-2 py-0.5 border border-ink font-bold mb-3">2. CYBER CODER</span>
+            <div class="w-28 h-28 sm:w-36 sm:h-36 bg-navy-900 border-2 border-ink flex items-center justify-center p-2 relative overflow-hidden">
+              <img id="mascot-img-2" src="https://api.iconify.design/pixelarticons:device-laptop.svg?color=%23FF2E93" alt="Maskot Pose 2" class="w-full h-full object-contain pixel-art animate-float" style="animation-delay: 0.8s;" />
+            </div>
+            <div class="mt-3">
+              <strong class="font-pixel text-[10px] text-cream block">Cyber Belida</strong>
+              <span class="font-mono text-[10px] text-cream/60">Mode Hacking / AI</span>
+            </div>
+          </div>
+          <!-- Slot 3 -->
+          <div class="border-3 border-ink bg-navy-800 p-4 shadow-hard flex flex-col items-center text-center group hover:-translate-y-1 transition-transform border-t-4 border-cyan">
+            <span class="font-pixel text-[8px] bg-cyan text-ink px-2 py-0.5 border border-ink font-bold mb-3">3. CHAMPION</span>
+            <div class="w-28 h-28 sm:w-36 sm:h-36 bg-navy-900 border-2 border-ink flex items-center justify-center p-2 relative overflow-hidden">
+              <img id="mascot-img-3" src="https://api.iconify.design/pixelarticons:trophy.svg?color=%2300F0FF" alt="Maskot Pose 3" class="w-full h-full object-contain pixel-art animate-float" style="animation-delay: 1.6s;" />
+            </div>
+            <div class="mt-3">
+              <strong class="font-pixel text-[10px] text-cream block">Piala Juara</strong>
+              <span class="font-mono text-[10px] text-cream/60">Selebrasi Kemenangan</span>
+            </div>
+          </div>
+          <!-- Slot 4 -->
+          <div class="border-3 border-ink bg-navy-800 p-4 shadow-hard flex flex-col items-center text-center group hover:-translate-y-1 transition-transform border-t-4 border-yellow">
+            <span class="font-pixel text-[8px] bg-yellow text-ink px-2 py-0.5 border border-ink font-bold mb-3">4. RETRO GAMER</span>
+            <div class="w-28 h-28 sm:w-36 sm:h-36 bg-navy-900 border-2 border-ink flex items-center justify-center p-2 relative overflow-hidden">
+              <img id="mascot-img-4" src="https://api.iconify.design/pixelarticons:gamepad.svg?color=%23FFE600" alt="Maskot Pose 4" class="w-full h-full object-contain pixel-art animate-float" style="animation-delay: 2.4s;" />
+            </div>
+            <div class="mt-3">
+              <strong class="font-pixel text-[10px] text-cream block">Gamer Chibi</strong>
+              <span class="font-mono text-[10px] text-cream/60">Esports & Chill</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <section class="section reveal" id="about" aria-labelledby="about-title">
-      <div class="section-heading"><div><span class="section-kicker">01 / ABOUT THE BUILDER</span><h2 id="about-title">Dibangun untuk<br><span style="color:var(--lime)">berdampak.</span></h2></div><p class="section-intro">Placeholder bio ini siap diganti dengan cerita personal: fokus pada masalah yang diselesaikan, proses kolaborasi, dan dampak yang dihasilkan.</p></div>
-      <div class="about-grid"><div class="panel about-copy"><p>Saya percaya produk digital yang baik bukan hanya terlihat keren, tetapi juga memberi arah yang jelas. Saya menggabungkan cara berpikir sistematis dengan rasa ingin tahu visual untuk mengubah brief yang abstrak menjadi pengalaman yang konkret.</p><p>Mulai dari menyusun struktur, mengeksplorasi visual, hingga memoles detail interaksi — saya senang bekerja block by block bersama tim yang peduli pada pengguna.</p></div><div class="panel stats" id="stats-list"></div></div>
-      <div class="journey"><article class="journey-item"><b>01 / DISCOVER</b><h3>Temukan inti</h3><p>Memetakan kebutuhan pengguna dan peluang produk sebelum membuka editor.</p></article><article class="journey-item"><b>02 / BUILD</b><h3>Rakit sistem</h3><p>Mengubah arah strategis menjadi komponen yang konsisten dan mudah dikembangkan.</p></article><article class="journey-item"><b>03 / REFINE</b><h3>Poles dampak</h3><p>Menguji detail, merapikan alur, dan memastikan hasilnya terasa di setiap layar.</p></article></div>
+    <!-- ======================================================== -->
+    <!-- 2. VIEW: PILIH EVENT (KOMPETISI, PELATIHAN, SEMINAR) -->
+    <!-- ======================================================== -->
+    <section id="view-events" class="spa-view hidden max-w-6xl mx-auto px-6 py-8">
+      
+      <!-- Category Tabs -->
+      <div class="text-center mb-10">
+        <span class="inline-block font-pixel text-xs text-pink tracking-widest px-3 py-1 bg-pink/15 border border-pink/40 rounded-sm uppercase">
+          ◆ KATALOG ACARA RESMI
+        </span>
+        <h2 id="catalog-main-title" class="font-pixel text-cream text-2xl sm:text-4xl mt-3 drop-shadow-[0_4px_0_rgba(5,7,24,1)]">
+          PILIH <span class="text-yellow">EVENT / LOMBA</span>
+        </h2>
+        <div class="w-24 h-1.5 bg-yellow mx-auto mt-4 border-2 border-ink shadow-hard-sm"></div>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-12 font-pixel text-[10px] sm:text-xs">
+        <button onclick="filterCatalog('all')" id="tab-btn-all" class="cat-tab-btn active-filter px-4 py-2 border-3 border-ink bg-yellow text-ink shadow-hard-sm font-bold">
+          SEMUA
+        </button>
+        <button onclick="filterCatalog('kompetisi')" id="tab-btn-kompetisi" class="cat-tab-btn px-4 py-2 border-3 border-ink bg-navy-800 text-cream shadow-hard-sm font-bold">
+          KOMPETISI (5)
+        </button>
+        <button onclick="filterCatalog('pelatihan')" id="tab-btn-pelatihan" class="cat-tab-btn px-4 py-2 border-3 border-ink bg-navy-800 text-cream shadow-hard-sm font-bold">
+          PELATIHAN (2)
+        </button>
+        <button onclick="filterCatalog('seminar')" id="tab-btn-seminar" class="cat-tab-btn px-4 py-2 border-3 border-ink bg-navy-800 text-cream shadow-hard-sm font-bold">
+          SEMINAR (2 PEMBICARA)
+        </button>
+      </div>
+
+      <!-- Catalog Cards Container -->
+      <div id="event-catalog-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"></div>
     </section>
 
-    <section class="section projects-section reveal" id="projects" aria-labelledby="projects-title">
-      <div class="section-heading"><div><span class="section-kicker">02 / SELECTED BUILDS</span><h2 id="projects-title">Dunia yang<br><span style="color:var(--cyan)">pernah dirakit.</span></h2></div><p class="section-intro">Contoh proyek placeholder — ganti judul, visual, deskripsi, dan tautannya dengan karya nyata sebelum dipublikasikan.</p></div>
-      <div class="project-grid" id="project-grid"></div>
+    <!-- ======================================================== -->
+    <!-- 3. VIEW: DETAIL EVENT -->
+    <!-- ======================================================== -->
+    <section id="view-event-detail" class="spa-view hidden max-w-4xl mx-auto px-6 py-8">
+      <div class="flex items-center gap-2 font-pixel text-[9px] text-cream/70 mb-4">
+        <button onclick="navigateTo('view-events')" class="hover:text-yellow">&lt; KEMBALI KE KATALOG</button>
+        <span>/</span>
+        <span class="text-yellow">DETAIL LENGKAP EVENT</span>
+      </div>
+
+      <div class="border-4 border-ink bg-navy-800 p-6 sm:p-10 shadow-hard-lg">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-ink pb-4">
+          <span id="detail-category-badge" class="font-pixel text-[10px] bg-pink text-ink px-3 py-1 border-2 border-ink font-bold">
+            KOMPETISI
+          </span>
+          <span id="detail-fee" class="font-mono text-sm text-yellow font-bold">GRATIS</span>
+        </div>
+
+        <h2 id="detail-title" class="font-pixel text-2xl sm:text-3xl text-cream mt-4 drop-shadow-[0_3px_0_rgba(5,7,24,1)]">
+          Nama Event
+        </h2>
+
+        <p id="detail-desc" class="text-cream/80 text-sm font-sans leading-relaxed mt-4 font-medium">
+          Deskripsi lengkap event.
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-4 my-6 font-mono text-xs">
+          <div class="p-3 border-2 border-ink bg-navy-900">
+            <span class="text-pink font-bold block mb-1">🗓 JADWAL PELAKSANAAN:</span>
+            <span id="detail-date" class="text-cream">10 Agustus - 11 Oktober 2026</span>
+          </div>
+          <div class="p-3 border-2 border-ink bg-navy-900">
+            <span class="text-cyan font-bold block mb-1">📍 TEMPAT / LOKASI RESMI:</span>
+            <span id="detail-location" class="text-cream">Jl. Srijaya Negara, Bukit Lama, Kec. Ilir Bar. I, Kota Palembang</span>
+          </div>
+          <div class="p-3 border-2 border-ink bg-navy-900">
+            <span class="text-yellow font-bold block mb-1">👥 FORMAT PESERTA:</span>
+            <span id="detail-format" class="text-cream">Tim / Individu</span>
+          </div>
+          <div class="p-3 border-2 border-ink bg-navy-900">
+            <span class="text-cream font-bold block mb-1">🏆 REWARD:</span>
+            <span id="detail-prize" class="text-yellow font-bold">Total Hadiah Jutaan Rupiah + Sertifikat</span>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t-2 border-ink flex flex-wrap items-center justify-between gap-4">
+          <button onclick="navigateTo('view-events')" class="press-btn px-4 py-2.5 bg-navy-700 text-cream font-pixel text-[10px] border-2 border-ink shadow-hard-sm">
+            &lt; KEMBALI
+          </button>
+          <button onclick="proceedToRegistrationForm()" class="press-btn px-7 py-3 bg-yellow text-ink font-pixel text-xs font-bold border-3 border-ink shadow-hard">
+            DAFTAR EVENT INI &gt;
+          </button>
+        </div>
+      </div>
     </section>
 
-    <section class="section reveal" id="skills" aria-labelledby="skills-title">
-      <div class="section-heading"><div><span class="section-kicker">03 / TOOLKIT</span><h2 id="skills-title">Senjata<br><span style="color:var(--violet)">sehari-hari.</span></h2></div><p class="section-intro">Teknologi adalah medium. Yang penting adalah memilih alat yang tepat untuk membuat pengalaman terasa sederhana.</p></div>
-      <div class="skills-layout"><div class="panel skill-panel" id="skill-groups"></div><div class="panel skill-panel"><h3>Orbit fokus</h3><p style="color:var(--muted);margin-top:-.5rem">Visualisasi ini menggambarkan area yang sering saya gunakan — bukan klaim level objektif.</p><div class="skill-meter"><div class="meter-row"><div class="meter-label"><span>Interface & Frontend</span><span>core</span></div><div class="meter-track"><span class="meter-fill" style="--level:92%"></span></div></div><div class="meter-row"><div class="meter-label"><span>Design systems</span><span>core</span></div><div class="meter-track"><span class="meter-fill" style="--level:82%"></span></div></div><div class="meter-row"><div class="meter-label"><span>Motion & prototyping</span><span>explore</span></div><div class="meter-track"><span class="meter-fill" style="--level:68%"></span></div></div></div></div></div>
+    <!-- ======================================================== -->
+    <!-- 4. VIEW: FORM PENDAFTARAN -->
+    <!-- ======================================================== -->
+    <section id="view-form-pendaftaran" class="spa-view hidden max-w-3xl mx-auto px-6 py-8">
+      <div class="flex items-center gap-2 font-pixel text-[9px] text-cream/70 mb-4">
+        <button onclick="navigateTo('view-event-detail')" class="hover:text-yellow">&lt; KEMBALI</button>
+        <span>/</span>
+        <span class="text-yellow">FORM PENDAFTARAN</span>
+      </div>
+
+      <div class="border-4 border-ink bg-navy-800 p-6 sm:p-10 shadow-hard-lg">
+        <span class="font-pixel text-[9px] bg-yellow text-ink px-2.5 py-1 border-2 border-ink shadow-hard-sm font-bold uppercase mb-2 inline-block">
+          LANGKAH 2 DARI 4
+        </span>
+        <h2 class="font-pixel text-xl sm:text-2xl text-cream">
+          FORMULIR REGISTRASI
+        </h2>
+        <p class="font-mono text-xs text-cyan mt-1">
+          Event: <strong id="form-chosen-event-title" class="text-yellow">-</strong>
+        </p>
+
+        <form id="step-registration-form" class="mt-6 space-y-4">
+          <div>
+            <label class="block font-pixel text-[10px] text-cream/90 mb-1.5">NAMA KETUA / PESERTA *</label>
+            <input type="text" id="form-leader-name" required placeholder="Contoh: Muhammad Rizky" class="w-full bg-navy-900 border-3 border-ink p-3 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-pixel text-[10px] text-cream/90 mb-1.5">EMAIL AKTIF *</label>
+              <input type="email" id="form-email" required placeholder="rizky@example.com" class="w-full bg-navy-900 border-3 border-ink p-3 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+            </div>
+            <div>
+              <label class="block font-pixel text-[10px] text-cream/90 mb-1.5">NOMOR WHATSAPP *</label>
+              <input type="tel" id="form-wa" required placeholder="0882-2798-xxxx" class="w-full bg-navy-900 border-3 border-ink p-3 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-pixel text-[10px] text-cream/90 mb-1.5">ASAL INSTITUSI / KAMPUS *</label>
+              <input type="text" id="form-institution" required placeholder="Contoh: POLSRI Palembang" class="w-full bg-navy-900 border-3 border-ink p-3 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+            </div>
+            <div>
+              <label class="block font-pixel text-[10px] text-cream/90 mb-1.5">NAMA TIM (JIKA ADA)</label>
+              <input type="text" id="form-team-name" placeholder="Contoh: Cyber Belida Squad" class="w-full bg-navy-900 border-3 border-ink p-3 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-pixel text-[10px] text-cream/90 mb-1.5">LINK KARTU IDENTITAS / KTM (GDRIVE) *</label>
+            <input type="url" id="form-ktm-link" required placeholder="https://drive.google.com/..." class="w-full bg-navy-900 border-3 border-ink p-3 font-mono text-xs text-cream focus:outline-none focus:border-yellow" />
+          </div>
+
+          <div class="pt-4 flex justify-end gap-3 border-t-2 border-ink">
+            <button type="button" onclick="navigateTo('view-event-detail')" class="press-btn px-4 py-2.5 bg-navy-700 text-cream font-pixel text-[10px] border-2 border-ink shadow-hard-sm">
+              BATAL
+            </button>
+            <button type="submit" class="press-btn px-7 py-3 bg-yellow text-ink font-pixel text-xs font-bold border-3 border-ink shadow-hard">
+              LANJUT REVIEW &gt;
+            </button>
+          </div>
+        </form>
+      </div>
     </section>
 
-    <section class="section reveal" id="contact" aria-labelledby="contact-title"><div class="panel contact-panel"><div><span class="section-kicker">04 / OPEN CHANNEL</span><h2 id="contact-title">Mari bangun sesuatu yang <span style="color:var(--lime)">berarti.</span></h2><p>Punya ide, tantangan, atau sekadar ingin bertukar perspektif? Kirim sinyal. Saya akan kembali dengan respons yang manusiawi.</p><div class="contact-actions"><a class="button" href="mailto:hello@coolyeah.placeholder">Kirim email <span aria-hidden="true">↗</span></a><button class="button secondary" id="copy-email" type="button" data-email="hello@coolyeah.placeholder">Copy email</button></div><div class="copy-status" id="copy-status" role="status" aria-live="polite"></div></div><ul class="contact-list" id="social-list"></ul></div></section>
+    <!-- ======================================================== -->
+    <!-- 5. VIEW: KONFIRMASI PENDAFTARAN -->
+    <!-- ======================================================== -->
+    <section id="view-konfirmasi" class="spa-view hidden max-w-3xl mx-auto px-6 py-8">
+      <div class="border-4 border-ink bg-navy-800 p-6 sm:p-10 shadow-hard-lg">
+        <span class="font-pixel text-[9px] bg-pink text-ink px-2.5 py-1 border-2 border-ink shadow-hard-sm font-bold uppercase mb-2 inline-block">
+          LANGKAH 3 DARI 4
+        </span>
+        <h2 class="font-pixel text-xl sm:text-2xl text-cream">
+          KONFIRMASI PENDAFTARAN
+        </h2>
+        <p class="font-mono text-xs text-cream/70 mt-1">
+          Mohon verifikasi data pendaftaran Anda sebelum dikirimkan secara final ke sistem.
+        </p>
+
+        <div class="my-6 border-2 border-ink bg-navy-900 p-4 font-mono text-xs space-y-2.5">
+          <div class="flex justify-between border-b border-ink/50 pb-2">
+            <span class="text-pink font-bold">Event Terpilih:</span>
+            <span id="conf-event" class="text-yellow font-bold">-</span>
+          </div>
+          <div class="flex justify-between border-b border-ink/50 pb-2">
+            <span class="text-cyan font-bold">Nama Ketua/Peserta:</span>
+            <span id="conf-name" class="text-cream">-</span>
+          </div>
+          <div class="flex justify-between border-b border-ink/50 pb-2">
+            <span class="text-cyan font-bold">Nama Tim:</span>
+            <span id="conf-team" class="text-cream">-</span>
+          </div>
+          <div class="flex justify-between border-b border-ink/50 pb-2">
+            <span class="text-cream/80 font-bold">Email:</span>
+            <span id="conf-email" class="text-cream">-</span>
+          </div>
+          <div class="flex justify-between border-b border-ink/50 pb-2">
+            <span class="text-cream/80 font-bold">WhatsApp:</span>
+            <span id="conf-wa" class="text-cream">-</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="text-cream/80 font-bold">Institusi:</span>
+            <span id="conf-inst" class="text-cream">-</span>
+          </div>
+        </div>
+
+        <div class="p-3 bg-yellow/10 border-2 border-yellow font-mono text-[11px] text-yellow mb-6">
+          📍 Lokasi Pelaksanaan: Jl. Srijaya Negara, Bukit Lama, Kec. Ilir Bar. I, Kota Palembang, Sumatera Selatan 30128.
+        </div>
+
+        <div class="flex justify-between items-center gap-3 pt-2">
+          <button onclick="navigateTo('view-form-pendaftaran')" class="press-btn px-4 py-2.5 bg-navy-700 text-cream font-pixel text-[10px] border-2 border-ink shadow-hard-sm">
+            &lt; EDIT DATA
+          </button>
+          <button onclick="submitFinalRegistration()" class="press-btn px-8 py-3.5 bg-yellow text-ink font-pixel text-xs font-extrabold border-3 border-ink shadow-hard">
+            SUBMIT PENDAFTARAN FINAL 🚀
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 6. VIEW: STATUS TIKET RESMI -->
+    <!-- ======================================================== -->
+    <section id="view-status" class="spa-view hidden max-w-3xl mx-auto px-6 py-8">
+      <div class="border-4 border-ink bg-navy-800 p-6 sm:p-10 shadow-hard-lg text-center relative overflow-hidden">
+        <span class="inline-block font-pixel text-[9px] bg-yellow text-ink px-3 py-1 border-2 border-ink shadow-hard-sm uppercase font-bold mb-3">
+          LANGKAH 4 DARI 4 - BERHASIL
+        </span>
+        <h2 class="font-pixel text-2xl sm:text-3xl text-cream drop-shadow-[0_2px_0_rgba(5,7,24,1)]">
+          STATUS TIKET PENDAFTARAN
+        </h2>
+        <p class="font-mono text-xs text-cream/80 mt-2">
+          Pendaftaran Anda telah resmi tersimpan di browser (*HTML5 LocalStorage*).
+        </p>
+
+        <!-- Ticket Card -->
+        <div class="my-8 border-4 border-dashed border-yellow bg-navy-900 p-6 sm:p-8 text-left shadow-hard relative">
+          <div class="absolute top-4 right-4 rotate-12 bg-pink text-ink font-pixel text-[10px] font-bold px-3 py-1.5 border-2 border-ink shadow-hard-sm">
+            TERDAFTAR
+          </div>
+
+          <div class="flex items-center gap-2 mb-4">
+            <span class="text-yellow text-xl">⚡</span>
+            <span class="font-pixel text-yellow text-xs tracking-wider">OFFICIAL PASS: IT-FESTIVAL 2026</span>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-4 font-mono text-xs">
+            <div>
+              <span class="text-cream/60 block text-[10px]">KODE TIKET:</span>
+              <strong id="ticket-id" class="font-pixel text-sm text-cyan">ITFEST-2026-X89K</strong>
+            </div>
+            <div>
+              <span class="text-cream/60 block text-[10px]">STATUS:</span>
+              <span class="inline-block px-2 py-0.5 bg-yellow text-ink font-pixel text-[9px] font-bold mt-0.5">
+                TERVERIFIKASI SISTEM
+              </span>
+            </div>
+            <div>
+              <span class="text-cream/60 block text-[10px]">EVENT:</span>
+              <strong id="ticket-event" class="text-cream font-bold">Capture The Flag</strong>
+            </div>
+            <div>
+              <span class="text-cream/60 block text-[10px]">PESERTA:</span>
+              <strong id="ticket-name" class="text-cream">Muhammad Rizky</strong>
+            </div>
+            <div class="sm:col-span-2">
+              <span class="text-cream/60 block text-[10px]">SEKRETARIAT:</span>
+              <span class="text-cream">Jl. Srijaya Negara, Bukit Lama, Kec. Ilir Bar. I, Kota Palembang 30128</span>
+            </div>
+          </div>
+
+          <div class="mt-6 pt-4 border-t-2 border-ink flex items-center justify-between">
+            <div class="font-mono text-lg tracking-widest text-cream/40 select-none">
+              ||| | |||| | ||| |||| || | |||| |
+            </div>
+            <span class="font-pixel text-[9px] text-yellow">POLSRI PALEMBANG</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <button onclick="window.print()" class="press-btn px-6 py-3 bg-cyan text-ink font-pixel text-xs font-bold border-3 border-ink shadow-hard">
+            CETAK / SIMPAN PDF 🖨️
+          </button>
+          <button onclick="navigateTo('view-dashboard')" class="press-btn px-6 py-3 bg-yellow text-ink font-pixel text-xs font-bold border-3 border-ink shadow-hard">
+            KE DASHBOARD SAYA &gt;
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- 7. VIEW: DASHBOARD PESERTA -->
+    <!-- ======================================================== -->
+    <section id="view-dashboard" class="spa-view hidden max-w-5xl mx-auto px-6 py-8">
+      <div class="flex items-center gap-2 font-pixel text-[9px] text-cream/70 mb-4">
+        <button onclick="navigateTo('view-landing')" class="hover:text-yellow">HOME</button>
+        <span>/</span>
+        <span class="text-yellow">DASHBOARD PESERTA</span>
+      </div>
+
+      <div class="border-4 border-ink bg-navy-800 p-6 sm:p-8 shadow-hard-lg relative">
+        <span class="inline-block font-pixel text-[9px] bg-cyan text-ink px-2.5 py-1 border-2 border-ink shadow-hard-sm font-bold uppercase mb-2">
+          USER PORTAL
+        </span>
+        <h2 class="font-pixel text-xl sm:text-3xl text-cream">
+          SELAMAT DATANG, <span id="dash-username" class="text-yellow">PESERTA</span>!
+        </h2>
+        <p class="font-mono text-xs text-cream/70 mt-2">
+          Kelola tiket pendaftaran lomba dan pelatihan Anda di Politeknik Negeri Sriwijaya.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-6">
+          <div class="p-4 border-2 border-ink bg-navy-900">
+            <div class="font-pixel text-[9px] text-pink">EVENT DIIKUTI</div>
+            <div id="dash-stat-events" class="font-pixel text-xl sm:text-2xl text-yellow mt-1">0</div>
+          </div>
+          <div class="p-4 border-2 border-ink bg-navy-900">
+            <div class="font-pixel text-[9px] text-cyan">STATUS TIKET</div>
+            <div id="dash-stat-status" class="font-pixel text-xs sm:text-sm text-cream mt-2">-</div>
+          </div>
+          <div class="col-span-2 sm:col-span-1 p-4 border-2 border-ink bg-navy-900 flex items-center justify-center">
+            <button onclick="navigateTo('view-events')" class="press-btn w-full py-2.5 bg-yellow text-ink font-pixel text-[10px] font-bold border-2 border-ink shadow-hard-sm">
+              + DAFTAR EVENT LAIN
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-8 border-3 border-ink bg-navy-800 p-6 shadow-hard">
+        <h3 class="font-pixel text-sm text-yellow mb-4">DAFTAR TIKET SAYA</h3>
+        <div id="dash-registrations-list" class="space-y-4"></div>
+      </div>
+    </section>
+
   </main>
 
-  <footer><span>© <span id="year"></span> Coolyeah. Built block by block.</span><a href="#home">Kembali ke atas ↑</a></footer>
+  <!-- AUTH MODAL -->
+  <div id="auth-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 hidden">
+    <div class="bg-navy-800 border-4 border-ink shadow-hard-lg max-w-md w-full p-6 relative">
+      <button onclick="closeAuthModal()" class="absolute -top-3 -right-3 w-8 h-8 bg-pink text-ink border-2 border-ink shadow-hard-sm font-pixel font-bold flex items-center justify-center hover:scale-110">
+        ✕
+      </button>
 
-  <div class="modal-backdrop" id="project-modal" hidden><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close" type="button" aria-label="Tutup detail proyek">×</button><div class="modal-content"><span class="section-kicker" id="modal-category"></span><h2 id="modal-title"></h2><p id="modal-description"></p><div class="stack" id="modal-stack"></div><p><strong>Catatan:</strong> Detail ini adalah placeholder konten yang siap diganti dengan studi kasus sebenarnya.</p><div class="project-links"><a class="button small" id="modal-demo" href="#" target="_blank" rel="noopener noreferrer">Lihat demo ↗</a><a class="button small secondary" id="modal-source" href="#" target="_blank" rel="noopener noreferrer">Source code ↗</a></div></div></div></div>
+      <div class="flex border-b-2 border-ink mb-6 font-pixel text-xs">
+        <button id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2 text-center border-b-4 border-yellow text-yellow font-bold">
+          LOGIN
+        </button>
+        <button id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2 text-center text-cream/60">
+          REGISTER
+        </button>
+      </div>
 
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block font-pixel text-[10px] text-cream mb-1">EMAIL</label>
+          <input type="email" id="login-email" required placeholder="user@example.com" class="w-full bg-navy-900 border-3 border-ink p-2.5 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+        </div>
+        <div>
+          <label class="block font-pixel text-[10px] text-cream mb-1">PASSWORD</label>
+          <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-navy-900 border-3 border-ink p-2.5 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+        </div>
+        <button type="submit" class="press-btn w-full py-3 bg-yellow text-ink font-pixel text-xs font-bold border-3 border-ink shadow-hard mt-2">
+          MASUK KE AKUN
+        </button>
+      </form>
+
+      <form id="register-form" class="space-y-4 hidden">
+        <div>
+          <label class="block font-pixel text-[10px] text-cream mb-1">NAMA LENGKAP</label>
+          <input type="text" id="reg-user-name" required placeholder="Nama Anda" class="w-full bg-navy-900 border-3 border-ink p-2.5 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+        </div>
+        <div>
+          <label class="block font-pixel text-[10px] text-cream mb-1">EMAIL AKTIF</label>
+          <input type="email" id="reg-user-email" required placeholder="user@example.com" class="w-full bg-navy-900 border-3 border-ink p-2.5 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+        </div>
+        <div>
+          <label class="block font-pixel text-[10px] text-cream mb-1">PASSWORD</label>
+          <input type="password" id="reg-user-password" required placeholder="Minimal 6 karakter" class="w-full bg-navy-900 border-3 border-ink p-2.5 font-sans text-sm text-cream focus:outline-none focus:border-yellow" />
+        </div>
+        <button type="submit" class="press-btn w-full py-3 bg-pink text-ink font-pixel text-xs font-bold border-3 border-ink shadow-hard mt-2">
+          BUAT AKUN BARU
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- RETRO FOOTER WITH REAL POLSRI CONTACT & ADDRESS -->
+  <footer class="relative bg-navy-900 border-t-3 border-ink text-cream overflow-hidden">
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-14 grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12">
+      <div class="md:col-span-5 space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 bg-yellow border-2 border-ink shadow-hard-sm flex items-center justify-center font-pixel text-ink text-sm font-bold">⚡</div>
+          <span class="font-pixel text-yellow text-lg md:text-xl font-bold tracking-wider">IT-FESTIVAL 2026</span>
+        </div>
+        <p class="text-cream/80 text-sm leading-relaxed font-sans font-medium">
+          Festival teknologi terbesar 2026 yang menghadirkan kompetisi, pelatihan, dan seminar untuk talenta digital masa depan.
+        </p>
+        <div class="font-mono text-xs text-cream/70 pt-1">
+          📍 Jl. Srijaya Negara, Bukit Lama, Kec. Ilir Bar. I, Kota Palembang, Sumatera Selatan 30128
+        </div>
+      </div>
+
+      <div class="md:col-span-3 space-y-4 font-pixel text-xs">
+        <h3 class="text-pink tracking-wider uppercase">QUICK LINKS</h3>
+        <ul class="space-y-2.5 font-sans text-cream/70 font-medium">
+          <li><button onclick="navigateTo('view-landing')" class="hover:text-yellow transition-colors inline-flex items-center gap-2"><span class="text-pink text-xs">◆</span> HOME</button></li>
+          <li><button onclick="navigateToTab('kompetisi')" class="hover:text-yellow transition-colors inline-flex items-center gap-2"><span class="text-pink text-xs">◆</span> KOMPETISI</button></li>
+          <li><button onclick="navigateToTab('pelatihan')" class="hover:text-yellow transition-colors inline-flex items-center gap-2"><span class="text-pink text-xs">◆</span> PELATIHAN</button></li>
+          <li><button onclick="navigateToTab('seminar')" class="hover:text-yellow transition-colors inline-flex items-center gap-2"><span class="text-pink text-xs">◆</span> SEMINAR</button></li>
+        </ul>
+      </div>
+
+      <div class="md:col-span-4 space-y-4 font-pixel text-xs">
+        <h3 class="text-cyan tracking-wider uppercase">CONTACT</h3>
+        <ul class="space-y-3 font-sans text-cream/80">
+          <li class="flex items-center gap-2"><span class="text-pink font-bold">📧</span> <a href="mailto:itfestivalpolsri2026@gmail.com" class="hover:text-yellow">itfestivalpolsri2026@gmail.com</a></li>
+          <li class="flex items-start gap-2"><span class="text-pink font-bold">📱</span> <div>08822-7984-0310<br/>08838-1925-5395</div></li>
+          <li class="flex items-center gap-2"><span class="text-pink font-bold">📸</span> <a href="https://www.instagram.com/itfestival.polsri/" target="_blank" class="hover:text-yellow">@itfestival.polsri</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="relative z-10 border-t border-ink/40 bg-navy-800/50 py-4 text-center font-mono text-xs text-cream/60">
+      © 2026 IT-Festival POLSRI • Jurusan Manajemen Informatika
+    </div>
+  </footer>
+
+  <!-- JAVASCRIPT MASTER LOGIC -->
   <script>
-    'use strict';
-    // CONTENT MODEL: replace placeholder values here before publishing.
-    const portfolio = {
-      profile: { email: 'hello@coolyeah.placeholder' },
-      stats: [{ value: '12+', label: 'proyek dirakit' }, { value: '04', label: 'tahun eksplorasi' }, { value: '08', label: 'partner kolaborasi' }, { value: '∞', label: 'rasa ingin tahu' }],
-      socials: [{ label: 'Email', value: 'hello@coolyeah.placeholder', url: 'mailto:hello@coolyeah.placeholder' }, { label: 'GitHub', value: 'github.com/your-handle', url: 'https://github.com/your-handle' }, { label: 'LinkedIn', value: 'linkedin.com/in/your-handle', url: 'https://linkedin.com/in/your-handle' }],
-      skills: [{ group: 'Frontend', items: ['HTML / CSS', 'JavaScript', 'Accessibility', 'Responsive UI'] }, { group: 'Backend / Tools', items: ['Node.js', 'REST API', 'Git workflow', 'Performance'] }, { group: 'Design / Motion', items: ['Design systems', 'Figma', 'Prototyping', 'CSS motion'] }],
-      projects: [
-        { id: 'atlas', code: 'AT', category: 'PRODUCT INTERFACE', title: 'Atlas Workspace', description: 'Dashboard kolaborasi yang merapikan pekerjaan kompleks menjadi alur yang tenang dan terukur.', stack: ['UX direction', 'Design system', 'Frontend'], imageClass: '', demoUrl: 'https://example.com/atlas-workspace', sourceUrl: 'https://github.com/your-handle/atlas-workspace' },
-        { id: 'signal', code: 'SG', category: 'BRAND EXPERIENCE', title: 'Signal / 2049', description: 'Landing page eksperimental untuk brand teknologi dengan storytelling yang bergerak mengikuti scroll.', stack: ['Art direction', 'Motion', 'Prototyping'], imageClass: 'visual-two', demoUrl: 'https://example.com/signal-2049', sourceUrl: 'https://github.com/your-handle/signal-2049' },
-        { id: 'terra', code: 'TR', category: 'WEB PLATFORM', title: 'Terra Notes', description: 'Ruang catatan digital yang ringan, accessible, dan terasa personal di setiap breakpoint.', stack: ['Frontend', 'Accessibility', 'Node.js'], imageClass: 'visual-three', demoUrl: 'https://example.com/terra-notes', sourceUrl: 'https://github.com/your-handle/terra-notes' }
-      ]
-    };
+    // FULL DATA FROM REAL SOURCE CODES (KOMPETISI, PELATIHAN, SEMINAR)
+    const EVENTS_DATA = [
+      // KOMPETISI
+      {
+        id: "ml",
+        category: "kompetisi",
+        badge: "KOMPETISI ESPORTS",
+        icon: "🎮",
+        title: "Mobile Legends",
+        shortDesc: "Buktikan skill dan kerja sama timmu di arena Mobile Legends, raih kemenangan demi kemenangan.",
+        desc: "Turnamen Mobile Legends Bang Bang tingkat regional & nasional IT-Festival 2026. Babak penyisihan online dan grand final offline di kampus POLSRI.",
+        date: "Sabtu, 3 Okt 2026 (Online) – Minggu, 4 Okt 2026 (Offline)",
+        location: "POLSRI Palembang (Jl. Srijaya Negara, Bukit Lama)",
+        format: "Tim (5 Pemain + 1 Cadangan)",
+        prize: "Total Hadiah Jutaan Rupiah + Trophy & E-Sertifikat",
+        fee: "Pendaftaran Terbuka"
+      },
+      {
+        id: "ff",
+        category: "kompetisi",
+        badge: "KOMPETISI ESPORTS",
+        icon: "🔥",
+        title: "Free Fire",
+        shortDesc: "Turun ke medan pertempuran Free Fire, jadi yang terakhir bertahan dan raih Booyah!",
+        desc: "Turnamen survival shooter Free Fire paling kompetitif. Siapkan strategi dan gameplay timmu untuk merebut gelar juara.",
+        date: "Sabtu, 10 Okt 2026 (Online) – Minggu, 11 Okt 2026 (Offline)",
+        location: "POLSRI Palembang (Jl. Srijaya Negara, Bukit Lama)",
+        format: "Tim (4 Pemain)",
+        prize: "Total Hadiah Jutaan Rupiah + Trophy & E-Sertifikat",
+        fee: "Pendaftaran Terbuka"
+      },
+      {
+        id: "vibecoding",
+        category: "kompetisi",
+        badge: "KOMPETISI INOVASI",
+        icon: "⚡",
+        title: "Vibe Coding Competition",
+        shortDesc: "Bangun aplikasi atau produk digital secepat mungkin menggunakan bantuan AI, untuk menciptakan kreativitas.",
+        desc: "Tantangan membangun prototipe aplikasi solusi permasalahan nyata berbasis Generative AI. Peserta dinilai dari kreativitas, fungsionalitas, dan estetika UI.",
+        date: "12 Oktober – 23 Oktober 2026",
+        location: "Online Submission & Penjurian",
+        format: "Individu / Tim (Maks 3 Orang)",
+        prize: "Total Hadiah Jutaan Rupiah + Sertifikat Resmi",
+        fee: "Pendaftaran Terbuka"
+      },
+      {
+        id: "ctf",
+        category: "kompetisi",
+        badge: "KOMPETISI CYBER",
+        icon: "🚩",
+        title: "Capture The Flag Competition",
+        shortDesc: "Uji kemampuan hacking dan keamanan sibermu dengan memecahkan berbagai tantangan CTF dari level pemula hingga expert.",
+        desc: "Kompetisi Jeopardy-style Cyber Security tingkat nasional. Kategori: Web Exploitation, Reverse Engineering, Forensics, Cryptography, dan Binary Exploitation.",
+        date: "Sabtu, 17 Oktober 2026",
+        location: "Online / Lab Siber POLSRI",
+        format: "Individu / Tim (Maks 3 Orang)",
+        prize: "Total Hadiah Jutaan Rupiah + Medali & Sertifikat",
+        fee: "Pendaftaran Terbuka"
+      },
+      {
+        id: "fotografi",
+        category: "kompetisi",
+        badge: "KOMPETISI KREATIF",
+        icon: "📸",
+        title: "Photography Competition",
+        shortDesc: "Tunjukkan sudut pandang kreatifmu lewat lensa kamera dan abadikan momen terbaik dalam kompetisi fotografi ini.",
+        desc: "Lomba fotografi bertema 'Human & Technology'. Bidik momen bagaimana teknologi mendisrupsi kehidupan dan aktivitas masyarakat di sekitar kita.",
+        date: "12 Oktober – 23 Oktober 2026",
+        location: "Online Submission",
+        format: "Individu",
+        prize: "Hadiah Uang Tunai + E-Sertifikat",
+        fee: "Pendaftaran Terbuka"
+      },
 
-    const qs = (selector, scope = document) => scope.querySelector(selector);
-    const qsa = (selector, scope = document) => Array.from(scope.querySelectorAll(selector));
-    const reducedMotion = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)').matches : false;
+      // PELATIHAN
+      {
+        id: "pelatihan-vibecoding",
+        category: "pelatihan",
+        badge: "WORKSHOP & TRAINING",
+        icon: "💻",
+        title: "Pelatihan Vibe Coding",
+        shortDesc: "Belajar membangun aplikasi dan produk digital secara cepat dengan bantuan AI, dari ide sampai jadi produk nyata.",
+        desc: "Workshop intensif yang membimbing peserta dari nol menggunakan modern AI-assisted software workflows untuk merilis aplikasi web ke publik.",
+        date: "17-18 September & 21-22 September 2026",
+        location: "Live Interactive Sandbox & Zoom",
+        format: "Individu",
+        prize: "Sertifikat Kelulusan Resmi",
+        fee: "GRATIS"
+      },
+      {
+        id: "pelatihan-cyber",
+        category: "pelatihan",
+        badge: "WORKSHOP & TRAINING",
+        icon: "🛡️",
+        title: "Pelatihan Cyber Security",
+        shortDesc: "Pelajari dasar-dasar keamanan siber, mulai dari deteksi celah keamanan hingga teknik perlindungan sistem.",
+        desc: "Bootcamp komprehensif mengupas OWASP Top 10 vulnerabilities, web security defense, packet sniffing, dan live penetration testing terisolasi.",
+        date: "23-25 September & 28 September 2026",
+        location: "Lab Komputer POLSRI & Online Lab",
+        format: "Individu",
+        prize: "Sertifikat Kelulusan Resmi",
+        fee: "GRATIS"
+      },
 
-    const profileImage = qs('.profile-image');
-    const imageFallback = qs('.image-fallback');
-    if (profileImage && imageFallback) {
-      profileImage.addEventListener('load', () => { profileImage.hidden = false; imageFallback.hidden = true; });
-      profileImage.addEventListener('error', () => { profileImage.hidden = true; imageFallback.hidden = false; });
-      imageFallback.hidden = false;
-      if (profileImage.complete && profileImage.naturalWidth > 0) imageFallback.hidden = true;
-    }
-
-    const statsList = qs('#stats-list');
-    if (statsList) statsList.innerHTML = portfolio.stats.map(stat => `<div class="stat"><strong>${stat.value}</strong><span>${stat.label}</span></div>`).join('');
-    const skillGroups = qs('#skill-groups');
-    if (skillGroups) skillGroups.innerHTML = portfolio.skills.map(skill => `<div style="margin-bottom:1.35rem"><h3>${skill.group}</h3><ul class="skill-list">${skill.items.map(item => `<li>${item}</li>`).join('')}</ul></div>`).join('');
-    const socialList = qs('#social-list');
-    if (socialList) socialList.innerHTML = portfolio.socials.map(social => `<li><a href="${social.url}"${social.url.startsWith('http') ? ' target="_blank" rel="noopener noreferrer"' : ''}><span>${social.label}</span><small>${social.value} ↗</small></a></li>`).join('');
-
-    const projectGrid = qs('#project-grid');
-    if (projectGrid) projectGrid.innerHTML = portfolio.projects.map(project => `<article class="project-card" tabindex="0"><div class="project-visual ${project.imageClass}" data-code="${project.code}" aria-hidden="true"><span class="visual-glyph">${project.code}</span></div><div class="project-body"><span class="project-type">${project.category}</span><h3>${project.title}</h3><p>${project.description}</p><div class="stack">${project.stack.map(item => `<span class="chip">${item}</span>`).join('')}</div><div class="project-links"><button class="text-button project-detail" type="button" data-project="${project.id}">Lihat detail ↗</button><a class="text-button" href="${project.demoUrl}" target="_blank" rel="noopener noreferrer">Demo ↗</a></div></div></article>`).join('');
-
-    const menuToggle = qs('.menu-toggle'); const navLinks = qs('.nav-links');
-    const closeMenu = () => { if (!menuToggle || !navLinks) return; menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.setAttribute('aria-label', 'Buka menu navigasi'); navLinks.classList.remove('is-open'); };
-    if (menuToggle && navLinks) {
-      menuToggle.addEventListener('click', () => { const open = menuToggle.getAttribute('aria-expanded') === 'true'; menuToggle.setAttribute('aria-expanded', String(!open)); menuToggle.setAttribute('aria-label', open ? 'Buka menu navigasi' : 'Tutup menu navigasi'); navLinks.classList.toggle('is-open', !open); });
-      qsa('a', navLinks).forEach(link => link.addEventListener('click', closeMenu));
-      window.addEventListener('resize', () => { if (window.innerWidth > 680) closeMenu(); });
-    }
-
-    const modalBackdrop = qs('#project-modal'); const modal = qs('.modal', modalBackdrop || document); const modalClose = qs('.modal-close', modalBackdrop || document); let lastFocused = null;
-    const openModal = (project) => {
-      if (!modalBackdrop || !project) return; lastFocused = document.activeElement; qs('#modal-category').textContent = project.category; qs('#modal-title').textContent = project.title; qs('#modal-description').textContent = project.description; qs('#modal-stack').innerHTML = project.stack.map(item => `<span class="chip">${item}</span>`).join(''); qs('#modal-demo').href = project.demoUrl; qs('#modal-source').href = project.sourceUrl; modalBackdrop.hidden = false; document.body.classList.add('modal-open'); modalClose && modalClose.focus();
-    };
-    const closeModal = () => { if (!modalBackdrop) return; modalBackdrop.hidden = true; document.body.classList.remove('modal-open'); if (lastFocused && typeof lastFocused.focus === 'function') lastFocused.focus(); };
-    qsa('.project-detail').forEach(button => button.addEventListener('click', () => openModal(portfolio.projects.find(project => project.id === button.dataset.project))));
-    qsa('.project-card').forEach(card => card.addEventListener('keydown', event => {
-      if ((event.key === 'Enter' || event.key === ' ') && event.target === card) {
-        event.preventDefault();
-        const detailButton = qs('.project-detail', card);
-        if (detailButton) detailButton.click();
+      // SEMINAR (SPEAKERS)
+      {
+        id: "seminar-avip",
+        category: "seminar",
+        badge: "GUEST STAR",
+        icon: "🎙️",
+        title: "Avip Syaifulloh, S.T. - CEO WPU Course",
+        shortDesc: "Wawasan langsung dari CEO WPU Course tentang roadmap karir teknologi dan industri digital masa depan.",
+        desc: "Sesi eksklusif bersama Avip Syaifulloh membahas strategi sukses menjadi software engineer berdaya saing global.",
+        date: "Rabu, 16 September 2026",
+        location: "Auditorium POLSRI Palembang",
+        format: "Umum & Mahasiswa",
+        prize: "E-Sertifikat Nasional + Networking",
+        fee: "GRATIS"
+      },
+      {
+        id: "seminar-rahmi",
+        category: "seminar",
+        badge: "KEYNOTE SPEAKER",
+        icon: "⚡",
+        title: "Rahmi Liza, S.Tr.Kom., M.Sc. - Software Engineer",
+        shortDesc: "Kupas tuntas arsitektur software terkini dan pemanfaatan AI dalam ekosistem engineering modern.",
+        desc: "Keynote talk bersama Rahmi Liza, S.Tr.Kom., M.Sc. mengenai tren software engineering dan kecerdasan buatan terapan.",
+        date: "Rabu, 16 September 2026",
+        location: "Auditorium POLSRI Palembang",
+        format: "Umum & Mahasiswa",
+        prize: "E-Sertifikat Nasional",
+        fee: "GRATIS"
       }
-    }));
-    if (modalClose) modalClose.addEventListener('click', closeModal);
-    if (modalBackdrop) { modalBackdrop.addEventListener('click', event => { if (event.target === modalBackdrop) closeModal(); }); modalBackdrop.addEventListener('keydown', event => { if (event.key === 'Escape') closeModal(); if (event.key === 'Tab' && modal) { const focusable = qsa('button, a[href]', modal).filter(el => !el.disabled); if (!focusable.length) return; const first = focusable[0]; const last = focusable[focusable.length - 1]; if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); } else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); } } }); }
+    ];
 
-    const copyButton = qs('#copy-email'); const copyStatus = qs('#copy-status');
-    if (copyButton) copyButton.addEventListener('click', async () => { const email = copyButton.dataset.email; try { await navigator.clipboard.writeText(email); if (copyStatus) copyStatus.textContent = 'Email tersalin ke clipboard.'; } catch (error) { if (copyStatus) copyStatus.textContent = `Salin manual: ${email}`; } });
-    const year = qs('#year'); if (year) year.textContent = new Date().getFullYear();
+    let currentSelectedEvent = null;
+    let pendingFormData = null;
 
-    if (!reducedMotion && 'IntersectionObserver' in window) { const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } }), { threshold: .12 }); qsa('.reveal').forEach(element => observer.observe(element)); } else qsa('.reveal').forEach(element => element.classList.add('is-visible'));
+    function navigateTo(viewId) {
+      $('.spa-view').addClass('hidden');
+      $(`#${viewId}`).removeClass('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
-      const particleColors = ['#38bdf8', '#ffd166', '#fb4f9b', '#ff7043']; let activeParticles = 0; const maxParticles = 30;
-    const burst = (event) => { if (reducedMotion || activeParticles >= maxParticles || !event.target.closest('.button, .nav-cta, .text-button, .brand')) return; const amount = Math.min(4, maxParticles - activeParticles); for (let index = 0; index < amount; index += 1) { const particle = document.createElement('i'); particle.className = 'burst-particle'; particle.style.left = `${event.clientX}px`; particle.style.top = `${event.clientY}px`; particle.style.background = particleColors[index % particleColors.length]; particle.style.setProperty('--tx', `${(Math.random() - .5) * 70}px`); particle.style.setProperty('--ty', `${(Math.random() - .5) * 70}px`); document.body.appendChild(particle); activeParticles += 1; particle.addEventListener('animationend', () => { particle.remove(); activeParticles -= 1; }, { once: true }); } };
-    document.addEventListener('click', burst, { passive: true });
+      if (viewId === 'view-dashboard') renderDashboard();
+    }
+
+    function navigateToTab(cat) {
+      navigateTo('view-events');
+      filterCatalog(cat);
+    }
+
+    function filterCatalog(category) {
+      $('.cat-tab-btn').removeClass('active-filter bg-yellow text-ink').addClass('bg-navy-800 text-cream');
+      $(`#tab-btn-${category}`).addClass('active-filter bg-yellow text-ink').removeClass('bg-navy-800 text-cream');
+
+      let filtered = EVENTS_DATA;
+      if (category !== 'all') {
+        filtered = EVENTS_DATA.filter(e => e.category === category);
+      }
+      renderCards(filtered);
+    }
+
+    function renderCards(items) {
+      const $grid = $('#event-catalog-grid');
+      $grid.empty();
+
+      items.forEach(ev => {
+        const card = `
+          <div class="border-3 border-ink shadow-hard bg-navy-800 p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform border-t-4 border-yellow">
+            <div>
+              <div class="flex items-center justify-between mb-4">
+                <div class="w-12 h-12 border-2 border-ink bg-yellow text-ink flex items-center justify-center text-xl font-bold shadow-hard-sm">
+                  ${ev.icon}
+                </div>
+                <span class="font-pixel text-[8px] bg-navy-900 px-2.5 py-1 border border-ink text-pink font-bold">${ev.badge}</span>
+              </div>
+              <h3 class="font-pixel text-base text-cream mb-2">${ev.title}</h3>
+              <p class="text-cream/70 text-xs font-sans mb-4">${ev.shortDesc}</p>
+            </div>
+            <div class="pt-4 border-t border-ink/40 flex items-center justify-between">
+              <span class="font-mono text-xs text-cyan font-bold">${ev.fee}</span>
+              <button onclick="viewEventDetail('${ev.id}')" class="press-btn px-4 py-2 bg-yellow text-ink font-pixel text-[10px] font-bold border-2 border-ink shadow-hard-sm">
+                LIHAT DETAIL &gt;
+              </button>
+            </div>
+          </div>
+        `;
+        $grid.append(card);
+      });
+    }
+
+    function viewEventDetail(eventId) {
+      const ev = EVENTS_DATA.find(e => e.id === eventId);
+      if (!ev) return;
+
+      currentSelectedEvent = ev;
+      $('#detail-category-badge').text(ev.badge);
+      $('#detail-fee').text(ev.fee);
+      $('#detail-title').text(ev.title);
+      $('#detail-desc').text(ev.desc);
+      $('#detail-date').text(ev.date);
+      $('#detail-location').text(ev.location);
+      $('#detail-format').text(ev.format);
+      $('#detail-prize').text(ev.prize);
+
+      navigateTo('view-event-detail');
+    }
+
+    function proceedToRegistrationForm() {
+      if (!currentSelectedEvent) {
+        navigateTo('view-events');
+        return;
+      }
+      const user = getCurrentUser();
+      if (!user) {
+        alert('Silakan login atau register terlebih dahulu untuk melanjutkan pendaftaran!');
+        openAuthModal('login');
+        return;
+      }
+
+      $('#form-chosen-event-title').text(currentSelectedEvent.title);
+      $('#form-leader-name').val(user.name || '');
+      $('#form-email').val(user.email || '');
+
+      navigateTo('view-form-pendaftaran');
+    }
+
+    $('#step-registration-form').on('submit', function(e) {
+      e.preventDefault();
+      pendingFormData = {
+        eventId: currentSelectedEvent.id,
+        eventTitle: currentSelectedEvent.title,
+        leaderName: $('#form-leader-name').val().trim(),
+        email: $('#form-email').val().trim(),
+        wa: $('#form-wa').val().trim(),
+        institution: $('#form-institution').val().trim(),
+        teamName: $('#form-team-name').val().trim() || '-',
+        ktmLink: $('#form-ktm-link').val().trim()
+      };
+
+      $('#conf-event').text(pendingFormData.eventTitle);
+      $('#conf-name').text(pendingFormData.leaderName);
+      $('#conf-team').text(pendingFormData.teamName);
+      $('#conf-email').text(pendingFormData.email);
+      $('#conf-wa').text(pendingFormData.wa);
+      $('#conf-inst').text(pendingFormData.institution);
+
+      navigateTo('view-konfirmasi');
+    });
+
+    function submitFinalRegistration() {
+      if (!pendingFormData) return;
+      const randCode = Math.random().toString(36).substring(2, 6).toUpperCase();
+      const ticketCode = `ITFEST-2026-${randCode}`;
+
+      const record = {
+        ticketId: ticketCode,
+        event: pendingFormData.eventTitle,
+        name: pendingFormData.leaderName,
+        institution: pendingFormData.institution,
+        wa: pendingFormData.wa,
+        email: pendingFormData.email,
+        date: new Date().toLocaleDateString('id-ID'),
+        status: 'TERVERIFIKASI SISTEM'
+      };
+
+      try {
+        let allRegs = JSON.parse(localStorage.getItem('itfest_registrations')) || [];
+        allRegs.push(record);
+        localStorage.setItem('itfest_registrations', JSON.stringify(allRegs));
+      } catch (e) {}
+
+      $('#ticket-id').text(ticketCode);
+      $('#ticket-event').text(record.event);
+      $('#ticket-name').text(record.name);
+
+      confetti({ particleCount: 150, spread: 90, origin: { y: 0.6 } });
+      navigateTo('view-status');
+    }
+
+    function renderDashboard() {
+      const user = getCurrentUser();
+      if (!user) {
+        navigateTo('view-landing');
+        return;
+      }
+      $('#dash-username').text(user.name.toUpperCase());
+
+      let allRegs = [];
+      try {
+        allRegs = JSON.parse(localStorage.getItem('itfest_registrations')) || [];
+      } catch (e) {}
+
+      const userRegs = allRegs.filter(r => r.email === user.email || r.name.toLowerCase() === user.name.toLowerCase());
+      const displayRegs = userRegs.length > 0 ? userRegs : allRegs;
+
+      $('#dash-stat-events').text(displayRegs.length);
+      $('#dash-stat-status').text(displayRegs.length > 0 ? '✅ 1 TIKET AKTIF' : 'BELUM DAFTAR');
+
+      const $list = $('#dash-registrations-list');
+      $list.empty();
+
+      if (displayRegs.length === 0) {
+        $list.html(`
+          <div class="p-4 border-2 border-ink bg-navy-900 text-center text-cream/50 font-mono text-xs">
+            Anda belum mendaftar di event mana pun. Klik tombol <strong>"+ DAFTAR EVENT LAIN"</strong> untuk mulai mendaftar!
+          </div>
+        `);
+      } else {
+        displayRegs.forEach(reg => {
+          $list.append(`
+            <div class="border-2 border-ink bg-navy-900 p-4 flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span class="font-pixel text-[9px] text-pink">${reg.ticketId}</span>
+                <h4 class="font-pixel text-sm text-yellow mt-1">${reg.event}</h4>
+                <div class="font-mono text-xs text-cream/70 mt-0.5">Peserta: ${reg.name} • ${reg.institution}</div>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="px-2 py-1 bg-yellow text-ink font-pixel text-[8px] font-bold">TERVERIFIKASI</span>
+                <button onclick="navigateTo('view-status')" class="press-btn px-3 py-1.5 bg-navy-700 text-cream font-pixel text-[9px] border border-ink">
+                  LIHAT TIKET
+                </button>
+              </div>
+            </div>
+          `);
+        });
+      }
+    }
+
+    function getUsers() {
+      try { return JSON.parse(localStorage.getItem('itfest_users')) || []; } catch(e) { return []; }
+    }
+    function getCurrentUser() {
+      try { return JSON.parse(localStorage.getItem('itfest_currentUser')) || null; } catch(e) { return null; }
+    }
+    function setCurrentUser(u) {
+      localStorage.setItem('itfest_currentUser', JSON.stringify(u));
+      syncAuthUI();
+    }
+    function syncAuthUI() {
+      const u = getCurrentUser();
+      if (u) {
+        $('#auth-guest-zone').addClass('hidden');
+        $('#auth-user-zone').removeClass('hidden');
+        $('#user-greeting').text(`Halo, ${u.name.split(' ')[0]}!`);
+        $('#nav-dashboard-link').removeClass('hidden');
+      } else {
+        $('#auth-guest-zone').removeClass('hidden');
+        $('#auth-user-zone').addClass('hidden');
+        $('#nav-dashboard-link').addClass('hidden');
+      }
+    }
+    function openAuthModal(t) {
+      $('#auth-modal').removeClass('hidden');
+      switchAuthTab(t);
+    }
+    function closeAuthModal() { $('#auth-modal').addClass('hidden'); }
+    function switchAuthTab(t) {
+      if (t === 'login') {
+        $('#tab-login').addClass('border-b-4 border-yellow text-yellow font-bold').removeClass('text-cream/60');
+        $('#tab-register').removeClass('border-b-4 border-yellow text-yellow font-bold').addClass('text-cream/60');
+        $('#login-form').removeClass('hidden');
+        $('#register-form').addClass('hidden');
+      } else {
+        $('#tab-register').addClass('border-b-4 border-yellow text-yellow font-bold').removeClass('text-cream/60');
+        $('#tab-login').removeClass('border-b-4 border-yellow text-yellow font-bold').addClass('text-cream/60');
+        $('#register-form').removeClass('hidden');
+        $('#login-form').addClass('hidden');
+      }
+    }
+    function logoutUser() {
+      localStorage.removeItem('itfest_currentUser');
+      syncAuthUI();
+      navigateTo('view-landing');
+    }
+
+    $('#register-form').on('submit', function(e) {
+      e.preventDefault();
+      const name = $('#reg-user-name').val().trim();
+      const email = $('#reg-user-email').val().trim();
+      const pass = $('#reg-user-password').val().trim();
+      let users = getUsers();
+      if (users.find(u => u.email === email)) {
+        alert('Email ini sudah terdaftar! Silakan login.');
+        return;
+      }
+      const newUser = { id: Date.now(), name, email, pass };
+      users.push(newUser);
+      localStorage.setItem('itfest_users', JSON.stringify(users));
+      setCurrentUser(newUser);
+      closeAuthModal();
+      confetti({ particleCount: 80, spread: 60 });
+      navigateTo('view-dashboard');
+    });
+
+    $('#login-form').on('submit', function(e) {
+      e.preventDefault();
+      const email = $('#login-email').val().trim();
+      const pass = $('#login-password').val().trim();
+      const users = getUsers();
+      const found = users.find(u => u.email === email && u.pass === pass);
+      if (found) {
+        setCurrentUser(found);
+        closeAuthModal();
+        navigateTo('view-dashboard');
+      } else {
+        if (email && pass) {
+          const guest = { id: Date.now(), name: email.split('@')[0], email, pass };
+          users.push(guest);
+          localStorage.setItem('itfest_users', JSON.stringify(users));
+          setCurrentUser(guest);
+          closeAuthModal();
+          navigateTo('view-dashboard');
+        } else {
+          alert('Email atau Password salah!');
+        }
+      }
+    });
+
+    $(document).ready(function() {
+      $('#menu-btn').on('click', () => $('#mobile-menu').toggleClass('hidden'));
+
+      // Typewriter
+      const phrases = [
+        "WELCOME TO IT-FESTIVAL 2026",
+        "POLITEKNIK NEGERI SRIWIJAYA",
+        "KOMPETISI, PELATIHAN & SEMINAR",
+        "THE BIGGEST TECH FESTIVAL"
+      ];
+      let pIdx = 0, cIdx = 0, del = false;
+      function typewriter() {
+        const cur = phrases[pIdx];
+        if (del) {
+          $('#typewriter').text(cur.substring(0, cIdx - 1));
+          cIdx--;
+        } else {
+          $('#typewriter').text(cur.substring(0, cIdx + 1));
+          cIdx++;
+        }
+        let sp = del ? 35 : 85;
+        if (!del && cIdx === cur.length) { sp = 2000; del = true; }
+        else if (del && cIdx === 0) { del = false; pIdx = (pIdx + 1) % phrases.length; sp = 500; }
+        setTimeout(typewriter, sp);
+      }
+      typewriter();
+
+      renderCards(EVENTS_DATA);
+      syncAuthUI();
+    });
   </script>
 </body>
 </html>
